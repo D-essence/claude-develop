@@ -1,0 +1,4009 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フルスタック開発学習リソース</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #4361ee;
+            --accent: #7209b7;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 6px;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --transition: all 0.2s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            padding: 20px;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.25rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        ul, ol {
+            margin: 0 0 1rem 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .toc {
+            background-color: var(--gray-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border-left: none;
+            margin-bottom: 1rem;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+        
+        .toc ul ul {
+            margin-left: 1.5rem;
+        }
+        
+        .toc a {
+            display: block;
+            padding: 0.25rem 0;
+            color: var(--dark);
+        }
+        
+        .toc a:hover {
+            color: var(--primary);
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            break-inside: avoid;
+        }
+        
+        .subsection {
+            margin-bottom: 2rem;
+            break-inside: avoid;
+        }
+        
+        .card {
+            background-color: white;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--gray-light);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-light);
+        }
+        
+        th {
+            background-color: var(--gray-light);
+            text-align: left;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: var(--gray-light);
+            color: var(--dark);
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tag-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tag-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .tag-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .note {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .warning {
+            background-color: #fff7e6;
+            border-left: 4px solid #fa8c16;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .diagram {
+            width: 100%;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            background-color: white;
+        }
+        
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            color: #d63384;
+        }
+        
+        .steps {
+            counter-reset: step;
+            list-style-type: none;
+            margin-left: 0;
+        }
+        
+        .steps li {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .steps li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.75rem;
+            height: 1.75rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>フルスタック開発学習リソース</h1>
+        
+        <div class="toc">
+            <h2>目次</h2>
+            <ul>
+                <li><a href="#introduction">1. フルスタック開発概要</a></li>
+                <li><a href="#development-flow">2. 効率的な開発フロー</a>
+                    <ul>
+                        <li><a href="#requirements">2.1 要件定義と計画</a></li>
+                        <li><a href="#architecture">2.2 アーキテクチャ設計</a></li>
+                        <li><a href="#implementation">2.3 実装手法</a></li>
+                        <li><a href="#testing">2.4 テストと品質保証</a></li>
+                        <li><a href="#deployment">2.5 デプロイメントと運用</a></li>
+                    </ul>
+                </li>
+                <li><a href="#frontend">3. フロントエンド開発</a>
+                    <ul>
+                        <li><a href="#ui-components">3.1 UIコンポーネント設計</a></li>
+                        <li><a href="#state-management">3.2 状態管理</a></li>
+                        <li><a href="#responsive">3.3 レスポンシブデザイン</a></li>
+                        <li><a href="#performance">3.4 パフォーマンス最適化</a></li>
+                    </ul>
+                </li>
+                <li><a href="#backend">4. バックエンド開発</a>
+                    <ul>
+                        <li><a href="#api-design">4.1 API設計</a></li>
+                        <li><a href="#server-architecture">4.2 サーバーアーキテクチャ</a></li>
+                        <li><a href="#middleware">4.3 ミドルウェアとサービス層</a></li>
+                        <li><a href="#error-handling">4.4 エラー処理と例外管理</a></li>
+                    </ul>
+                </li>
+                <li><a href="#database">5. データベース設計と最適化</a>
+                    <ul>
+                        <li><a href="#data-modeling">5.1 データモデリング</a></li>
+                        <li><a href="#sql-nosql">5.2 SQLとNoSQLの選択</a></li>
+                        <li><a href="#query-optimization">5.3 クエリ最適化</a></li>
+                        <li><a href="#data-access">5.4 データアクセスパターン</a></li>
+                    </ul>
+                </li>
+                <li><a href="#authentication">6. 認証と権限管理</a>
+                    <ul>
+                        <li><a href="#auth-methods">6.1 認証手法</a></li>
+                        <li><a href="#authorization">6.2 権限モデル</a></li>
+                        <li><a href="#security">6.3 セキュリティベストプラクティス</a></li>
+                    </ul>
+                </li>
+                <li><a href="#serverless">7. サーバーレスアーキテクチャ</a>
+                    <ul>
+                        <li><a href="#functions">7.1 関数としてのサービス</a></li>
+                        <li><a href="#event-driven">7.2 イベント駆動設計</a></li>
+                        <li><a href="#cloud-services">7.3 クラウドサービスの活用</a></li>
+                    </ul>
+                </li>
+                <li><a href="#devops">8. CI/CDと自動化</a>
+                    <ul>
+                        <li><a href="#pipelines">8.1 パイプライン設計</a></li>
+                        <li><a href="#testing-automation">8.2 テスト自動化</a></li>
+                        <li><a href="#monitoring">8.3 監視とロギング</a></li>
+                    </ul>
+                </li>
+                <li><a href="#best-practices">9. ベストプラクティスとパターン</a></li>
+                <li><a href="#learning-path">10. 学習ロードマップ</a></li>
+            </ul>
+        </div>
+
+        <section id="introduction" class="section">
+            <h2>1. フルスタック開発概要</h2>
+            <p>フルスタック開発とは、Webアプリケーションの全ての層（フロントエンド、バックエンド、データベース、インフラ）を理解し、実装できる能力を指します。Claude 3.7を用いたフルスタック開発では、AIアシスタントの能力を活用して、これらの層を効率的に設計・実装することが可能です。</p>
+            
+            <div class="card">
+                <h3>フルスタック開発の構成要素</h3>
+                <div class="grid">
+                    <div>
+                        <h4>クライアント層</h4>
+                        <p>ユーザーインターフェースとクライアントサイドロジック</p>
+                        <div>
+                            <span class="tag tag-primary">HTML/CSS</span>
+                            <span class="tag tag-primary">JavaScript</span>
+                            <span class="tag tag-primary">React/Vue/Angular</span>
+                            <span class="tag tag-primary">状態管理</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>サーバー層</h4>
+                        <p>APIとビジネスロジック</p>
+                        <div>
+                            <span class="tag tag-secondary">Node.js</span>
+                            <span class="tag tag-secondary">Express</span>
+                            <span class="tag tag-secondary">RESTful API</span>
+                            <span class="tag tag-secondary">GraphQL</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>データ層</h4>
+                        <p>データ永続化と管理</p>
+                        <div>
+                            <span class="tag tag-accent">SQL</span>
+                            <span class="tag tag-accent">NoSQL</span>
+                            <span class="tag tag-accent">ORM</span>
+                            <span class="tag tag-accent">キャッシュ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <svg class="diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- アーキテクチャ図 -->
+                <rect x="50" y="50" width="700" height="70" rx="8" fill="#3a86ff" opacity="0.1" stroke="#3a86ff" stroke-width="2"/>
+                <text x="400" y="35" text-anchor="middle" font-weight="bold" font-size="16">クライアント層</text>
+                <rect x="100" y="65" width="180" height="40" rx="6" fill="#3a86ff" opacity="0.7" stroke="#3a86ff" stroke-width="1"/>
+                <text x="190" y="90" text-anchor="middle" fill="white" font-size="14">フロントエンドフレームワーク</text>
+                <rect x="340" y="65" width="120" height="40" rx="6" fill="#3a86ff" opacity="0.7" stroke="#3a86ff" stroke-width="1"/>
+                <text x="400" y="90" text-anchor="middle" fill="white" font-size="14">状態管理</text>
+                <rect x="520" y="65" width="180" height="40" rx="6" fill="#3a86ff" opacity="0.7" stroke="#3a86ff" stroke-width="1"/>
+                <text x="610" y="90" text-anchor="middle" fill="white" font-size="14">UIコンポーネント</text>
+                
+                <!-- APIレイヤー -->
+                <rect x="50" y="150" width="700" height="70" rx="8" fill="#4361ee" opacity="0.1" stroke="#4361ee" stroke-width="2"/>
+                <text x="400" y="135" text-anchor="middle" font-weight="bold" font-size="16">APIレイヤー</text>
+                <rect x="100" y="165" width="180" height="40" rx="6" fill="#4361ee" opacity="0.7" stroke="#4361ee" stroke-width="1"/>
+                <text x="190" y="190" text-anchor="middle" fill="white" font-size="14">RESTful API</text>
+                <rect x="340" y="165" width="120" height="40" rx="6" fill="#4361ee" opacity="0.7" stroke="#4361ee" stroke-width="1"/>
+                <text x="400" y="190" text-anchor="middle" fill="white" font-size="14">認証/認可</text>
+                <rect x="520" y="165" width="180" height="40" rx="6" fill="#4361ee" opacity="0.7" stroke="#4361ee" stroke-width="1"/>
+                <text x="610" y="190" text-anchor="middle" fill="white" font-size="14">バリデーション</text>
+                
+                <!-- サービス層 -->
+                <rect x="50" y="250" width="700" height="70" rx="8" fill="#7209b7" opacity="0.1" stroke="#7209b7" stroke-width="2"/>
+                <text x="400" y="235" text-anchor="middle" font-weight="bold" font-size="16">サービス層</text>
+                <rect x="100" y="265" width="180" height="40" rx="6" fill="#7209b7" opacity="0.7" stroke="#7209b7" stroke-width="1"/>
+                <text x="190" y="290" text-anchor="middle" fill="white" font-size="14">ビジネスロジック</text>
+                <rect x="340" y="265" width="120" height="40" rx="6" fill="#7209b7" opacity="0.7" stroke="#7209b7" stroke-width="1"/>
+                <text x="400" y="290" text-anchor="middle" fill="white" font-size="14">トランザクション</text>
+                <rect x="520" y="265" width="180" height="40" rx="6" fill="#7209b7" opacity="0.7" stroke="#7209b7" stroke-width="1"/>
+                <text x="610" y="290" text-anchor="middle" fill="white" font-size="14">外部サービス連携</text>
+                
+                <!-- データ層 -->
+                <rect x="50" y="350" width="700" height="70" rx="8" fill="#3f37c9" opacity="0.1" stroke="#3f37c9" stroke-width="2"/>
+                <text x="400" y="335" text-anchor="middle" font-weight="bold" font-size="16">データ層</text>
+                <rect x="100" y="365" width="180" height="40" rx="6" fill="#3f37c9" opacity="0.7" stroke="#3f37c9" stroke-width="1"/>
+                <text x="190" y="390" text-anchor="middle" fill="white" font-size="14">データベース</text>
+                <rect x="340" y="365" width="120" height="40" rx="6" fill="#3f37c9" opacity="0.7" stroke="#3f37c9" stroke-width="1"/>
+                <text x="400" y="390" text-anchor="middle" fill="white" font-size="14">ORM</text>
+                <rect x="520" y="365" width="180" height="40" rx="6" fill="#3f37c9" opacity="0.7" stroke="#3f37c9" stroke-width="1"/>
+                <text x="610" y="390" text-anchor="middle" fill="white" font-size="14">キャッシュ/ストレージ</text>
+                
+                <!-- 接続線 -->
+                <line x1="190" y1="105" x2="190" y2="165" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                <line x1="400" y1="105" x2="400" y2="165" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                <line x1="610" y1="105" x2="610" y2="165" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                
+                <line x1="190" y1="205" x2="190" y2="265" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                <line x1="400" y1="205" x2="400" y2="265" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                <line x1="610" y1="205" x2="610" y2="265" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                
+                <line x1="190" y1="305" x2="190" y2="365" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                <line x1="400" y1="305" x2="400" y2="365" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+                <line x1="610" y1="305" x2="610" y2="365" stroke="#333" stroke-width="1" stroke-dasharray="5,5"/>
+            </svg>
+            
+            <div class="note">
+                <p><strong>Claude 3.7の役割：</strong> フルスタック開発においてClaude 3.7は、アーキテクチャ設計の提案、コードパターンの提供、ベストプラクティスの解説、トラブルシューティングのサポートなど、多岐にわたる役割を果たします。本リソースでは、各開発段階でClaude 3.7をどのように活用できるかを解説します。</p>
+            </div>
+        </section>
+
+        <section id="development-flow" class="section">
+            <h2>2. 効率的な開発フロー</h2>
+            <p>効率的な開発フローは、プロジェクトの成功に不可欠です。ここでは、要件定義から運用までの全工程を体系的に解説します。</p>
+            
+            <div id="requirements" class="subsection">
+                <h3>2.1 要件定義と計画</h3>
+                <p>プロジェクトの初期段階で、明確な要件と計画を策定することが重要です。</p>
+                
+                <div class="card">
+                    <h3>要件定義プロセス</h3>
+                    <ol class="steps">
+                        <li>
+                            <h4>ビジネス要件の収集</h4>
+                            <p>ステークホルダーからのニーズを理解し、ビジネス目標を明確にします。</p>
+                        </li>
+                        <li>
+                            <h4>ユーザーストーリーの作成</h4>
+                            <p>「ユーザーとして、〜したい。それは〜するためだ」という形式で機能要件を整理します。</p>
+                        </li>
+                        <li>
+                            <h4>非機能要件の定義</h4>
+                            <p>パフォーマンス、セキュリティ、スケーラビリティなどの要件を明確にします。</p>
+                        </li>
+                        <li>
+                            <h4>優先順位付け</h4>
+                            <p>MoSCoW法（Must have, Should have, Could have, Won't have）などを用いて機能の優先順位を決定します。</p>
+                        </li>
+                        <li>
+                            <h4>受け入れ基準の設定</h4>
+                            <p>各ユーザーストーリーが「完了」と見なされるための明確な基準を設定します。</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>アプローチ</th>
+                            <th>長所</th>
+                            <th>短所</th>
+                            <th>適用シナリオ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ウォーターフォール</td>
+                            <td>明確な計画と予測可能性</td>
+                            <td>変更への対応が困難</td>
+                            <td>要件が安定している小〜中規模プロジェクト</td>
+                        </tr>
+                        <tr>
+                            <td>アジャイル（スクラム）</td>
+                            <td>柔軟性と継続的フィードバック</td>
+                            <td>初期の全体像が不明確になりがち</td>
+                            <td>要件が流動的な中〜大規模プロジェクト</td>
+                        </tr>
+                        <tr>
+                            <td>カンバン</td>
+                            <td>継続的デリバリーと作業の可視化</td>
+                            <td>タイムボックスがないため期限管理が難しい</td>
+                            <td>保守・運用フェーズや継続的改善</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> 要件ドキュメントの作成、ユーザーストーリーの洗練化、非機能要件の特定など、要件定義プロセスをサポートできます。また、要件の整合性チェックや見落としがちな要素の指摘も可能です。</p>
+                </div>
+            </div>
+            
+            <div id="architecture" class="subsection">
+                <h3>2.2 アーキテクチャ設計</h3>
+                <p>システム全体の構造を決定し、技術スタックを選択します。</p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>モノリシックアーキテクチャ</h3>
+                        <p>すべてのコンポーネントが単一のコードベースに統合されたアーキテクチャ。</p>
+                        <h4>特徴：</h4>
+                        <ul>
+                            <li>開発の単純さ</li>
+                            <li>デプロイの容易さ</li>
+                            <li>統一されたコードベース</li>
+                        </ul>
+                        <h4>適用シナリオ：</h4>
+                        <p>小〜中規模のアプリケーション、MVPの作成、チーム規模が小さい場合</p>
+                    </div>
+                    <div class="card">
+                        <h3>マイクロサービスアーキテクチャ</h3>
+                        <p>独立してデプロイ可能な小さなサービスの集合として設計されたアーキテクチャ。</p>
+                        <h4>特徴：</h4>
+                        <ul>
+                            <li>サービスごとの独立した開発とデプロイ</li>
+                            <li>技術スタックの柔軟な選択</li>
+                            <li>スケーラビリティの向上</li>
+                        </ul>
+                        <h4>適用シナリオ：</h4>
+                        <p>大規模アプリケーション、複数チームでの開発、高いスケーラビリティが必要な場合</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>技術スタック選定基準</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>基準</th>
+                                <th>検討ポイント</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>チームのスキルセット</td>
+                                <td>既存の知識を活かせるか、学習コストはどうか</td>
+                            </tr>
+                            <tr>
+                                <td>プロジェクト要件</td>
+                                <td>パフォーマンス、セキュリティ、スケーラビリティに関する要件を満たせるか</td>
+                            </tr>
+                            <tr>
+                                <td>コミュニティとサポート</td>
+                                <td>活発なコミュニティ、ドキュメント、サポートが利用可能か</td>
+                            </tr>
+                            <tr>
+                                <td>長期的な持続可能性</td>
+                                <td>技術の将来性、メンテナンスのしやすさ</td>
+                            </tr>
+                            <tr>
+                                <td>統合の容易さ</td>
+                                <td>既存システムや外部サービスとの統合はスムーズか</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> プロジェクト要件に基づいた最適なアーキテクチャパターンの提案、技術スタックの比較分析、アーキテクチャ図の作成などをサポートできます。また、特定の技術選択に関する利点・欠点の詳細な解説も提供できます。</p>
+                </div>
+            </div>
+            
+            <div id="implementation" class="subsection">
+                <h3>2.3 実装手法</h3>
+                <p>効率的かつ保守性の高いコードを書くための実装手法について解説します。</p>
+                
+                <div class="card">
+                    <h3>コーディング規約とベストプラクティス</h3>
+                    <ul>
+                        <li><strong>一貫性のあるコードスタイル：</strong> リンターやフォーマッターを使用して、コードスタイルの一貫性を維持する</li>
+                        <li><strong>適切な命名規則：</strong> 変数、関数、クラスには意図が明確になる名前を付ける</li>
+                        <li><strong>コメントとドキュメント：</strong> コードの「なぜ」を説明するコメントを追加し、APIドキュメントを整備する</li>
+                        <li><strong>モジュール化：</strong> 単一責任の原則に従い、機能を小さなモジュールに分割する</li>
+                        <li><strong>テスト可能性：</strong> テストしやすいコードを書き、自動テストでカバーする</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>デザインパターンの適用</h3>
+                    <p>一般的なデザインパターンを理解し、適切に適用することで、コードの品質と保守性を向上させることができます。</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>パターン分類</th>
+                                <th>代表的なパターン</th>
+                                <th>適用シナリオ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>生成パターン</td>
+                                <td>Factory、Singleton、Builder</td>
+                                <td>オブジェクト生成プロセスの柔軟性と再利用性を高めたい場合</td>
+                            </tr>
+                            <tr>
+                                <td>構造パターン</td>
+                                <td>Adapter、Composite、Proxy</td>
+                                <td>オブジェクト間の関係を整理し、構造を簡素化したい場合</td>
+                            </tr>
+                            <tr>
+                                <td>振る舞いパターン</td>
+                                <td>Observer、Strategy、Command</td>
+                                <td>オブジェクト間の通信や責任分担を効果的に行いたい場合</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> デザインパターンは銀の弾丸ではありません。過剰な適用は複雑性を増し、かえって保守性を低下させることがあります。常にシンプルさとのバランスを考慮しましょう。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> コーディング規約の提案、特定の問題に適したデザインパターンの推奨、コードのリファクタリング提案など、実装フェーズでの様々な支援が可能です。また、特定の機能実装に関する概念的なアプローチも提供できます。</p>
+                </div>
+            </div>
+            
+            <div id="testing" class="subsection">
+                <h3>2.4 テストと品質保証</h3>
+                <p>高品質なソフトウェアを提供するためのテスト戦略について解説します。</p>
+                
+                <div class="card">
+                    <h3>テストピラミッド</h3>
+                    <p>効果的なテスト戦略は、異なるレベルのテストを適切なバランスで組み合わせることが重要です。</p>
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 400px; margin: 1rem auto; display: block;">
+                        <polygon points="200,50 50,250 350,250" fill="#e9ecef" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="50" y1="250" x2="350" y2="250" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="83.33" y1="200" x2="316.67" y2="200" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="116.67" y1="150" x2="283.33" y2="150" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="150" y1="100" x2="250" y2="100" stroke="#6c757d" stroke-width="2"/>
+                        
+                        <text x="200" y="270" text-anchor="middle" font-size="14" font-weight="bold">単体テスト</text>
+                        <text x="200" y="220" text-anchor="middle" font-size="14" font-weight="bold">統合テスト</text>
+                        <text x="200" y="170" text-anchor="middle" font-size="14" font-weight="bold">API テスト</text>
+                        <text x="200" y="120" text-anchor="middle" font-size="14" font-weight="bold">UI テスト</text>
+                        <text x="200" y="70" text-anchor="middle" font-size="14" font-weight="bold">E2E テスト</text>
+                    </svg>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>テストレベル</th>
+                            <th>目的</th>
+                            <th>ツール例</th>
+                            <th>重要性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>単体テスト</td>
+                            <td>個々の関数やメソッドが正しく動作するか検証</td>
+                            <td>Jest, Mocha, JUnit</td>
+                            <td>高（多数のテストケース）</td>
+                        </tr>
+                        <tr>
+                            <td>統合テスト</td>
+                            <td>複数のモジュールやサービスの連携を検証</td>
+                            <td>Supertest, TestContainers</td>
+                            <td>中〜高</td>
+                        </tr>
+                        <tr>
+                            <td>API テスト</td>
+                            <td>APIエンドポイントの動作検証</td>
+                            <td>Postman, REST Assured</td>
+                            <td>中</td>
+                        </tr>
+                        <tr>
+                            <td>UI テスト</td>
+                            <td>ユーザーインターフェースの動作検証</td>
+                            <td>React Testing Library, Enzyme</td>
+                            <td>中〜低</td>
+                        </tr>
+                        <tr>
+                            <td>E2E テスト</td>
+                            <td>ユーザーの視点からシステム全体の動作を検証</td>
+                            <td>Cypress, Selenium, Playwright</td>
+                            <td>低（重要なフローのみ）</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="card">
+                    <h3>テスト駆動開発（TDD）</h3>
+                    <ol class="steps">
+                        <li>
+                            <h4>失敗するテストを書く</h4>
+                            <p>実装する機能に対するテストケースを先に作成し、期待する動作を定義します。</p>
+                        </li>
+                        <li>
+                            <h4>テストが通るように実装する</h4>
+                            <p>最小限のコードを書いて、テストをパスさせます。</p>
+                        </li>
+                        <li>
+                            <h4>リファクタリングする</h4>
+                            <p>テストが通ることを確認しながら、コードの品質を向上させます。</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> テスト戦略の策定、テストケースの考案、テストコードの作成サポート、テスト自動化の提案などを行うことができます。また、バグの潜在的な原因分析やテスト結果の解釈もサポートします。</p>
+                </div>
+            </div>
+            
+            <div id="deployment" class="subsection">
+                <h3>2.5 デプロイメントと運用</h3>
+                <p>アプリケーションを安全かつ効率的にデプロイし、安定した運用を行うための手法を解説します。</p>
+                
+                <div class="card">
+                    <h3>デプロイメント戦略</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>戦略</th>
+                                <th>概要</th>
+                                <th>メリット</th>
+                                <th>リスク</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ビッグバンデプロイ</td>
+                                <td>一度にすべてを置き換える</td>
+                                <td>シンプルで実装が容易</td>
+                                <td>問題発生時のリスクが大きい</td>
+                            </tr>
+                            <tr>
+                                <td>ブルー/グリーンデプロイ</td>
+                                <td>新旧両方の環境を用意し、トラフィックを切り替える</td>
+                                <td>ダウンタイムなし、ロールバックが容易</td>
+                                <td>リソースコストが高い</td>
+                            </tr>
+                            <tr>
+                                <td>カナリアデプロイ</td>
+                                <td>一部のユーザーにのみ新バージョンを提供</td>
+                                <td>リスクを限定的に抑える、段階的な検証</td>
+                                <td>複雑な設定と監視が必要</td>
+                            </tr>
+                            <tr>
+                                <td>ローリングデプロイ</td>
+                                <td>サーバーを少しずつ更新していく</td>
+                                <td>リソース効率が良い、段階的な移行</td>
+                                <td>完了までに時間がかかる</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>継続的インテグレーション/継続的デプロイ（CI/CD）</h3>
+                    <p>CI/CDパイプラインを構築することで、コード変更の検証とデプロイを自動化し、開発速度と品質を向上させます。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>コードのプッシュ</h4>
+                            <p>開発者がソースコードをリポジトリにプッシュします。</p>
+                        </li>
+                        <li>
+                            <h4>ビルドと単体テスト</h4>
+                            <p>コードがビルドされ、単体テストが実行されます。</p>
+                        </li>
+                        <li>
+                            <h4>統合テストと品質チェック</h4>
+                            <p>統合テストやコード品質チェック（静的解析など）が実行されます。</p>
+                        </li>
+                        <li>
+                            <h4>ステージング環境へのデプロイ</h4>
+                            <p>テスト環境にデプロイされ、より広範なテストが行われます。</p>
+                        </li>
+                        <li>
+                            <h4>本番環境へのデプロイ</h4>
+                            <p>すべてのチェックに合格したら、本番環境にデプロイされます。</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>監視と運用</h3>
+                    <p>アプリケーションの健全性を継続的に監視し、問題を早期に発見・対応することが重要です。</p>
+                    <ul>
+                        <li><strong>ロギング：</strong> 構造化ログの収集と集中管理</li>
+                        <li><strong>メトリクス：</strong> パフォーマンス、リソース使用率などの数値指標の収集</li>
+                        <li><strong>アラート：</strong> 閾値ベースのアラートと通知システム</li>
+                        <li><strong>障害復旧：</strong> バックアップと復旧手順の整備</li>
+                        <li><strong>パフォーマンス分析：</strong> 定期的なパフォーマンス評価と最適化</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> デプロイメント戦略の提案、CI/CDパイプラインの設計、監視・アラート設定の推奨、インシデント対応手順の作成などをサポートできます。また、運用上の課題に対する解決策の提案も可能です。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="frontend" class="section">
+            <h2>3. フロントエンド開発</h2>
+            <p>ユーザーが直接操作するインターフェースを構築するためのフロントエンド開発手法について解説します。</p>
+            
+            <div id="ui-components" class="subsection">
+                <h3>3.1 UIコンポーネント設計</h3>
+                <p>再利用可能でメンテナンス性の高いUIコンポーネントを設計する方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>コンポーネント設計の原則</h3>
+                    <ul>
+                        <li><strong>単一責任：</strong> 各コンポーネントは1つの責任を持つべき</li>
+                        <li><strong>コンポジション：</strong> 小さなコンポーネントを組み合わせて複雑なUIを構築</li>
+                        <li><strong>再利用性：</strong> 汎用的で再利用可能なコンポーネントを設計</li>
+                        <li><strong>プロップドリル防止：</strong> コンテキストや状態管理を適切に活用</li>
+                        <li><strong>適切な粒度：</strong> コンポーネントを適切なサイズに分割</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>コンポーネント分類</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>タイプ</th>
+                                <th>特徴</th>
+                                <th>例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>原子（Atoms）</td>
+                                <td>最小単位の基本要素</td>
+                                <td>ボタン、入力フィールド、アイコン</td>
+                            </tr>
+                            <tr>
+                                <td>分子（Molecules）</td>
+                                <td>原子の組み合わせ</td>
+                                <td>検索フォーム、カード、メニュー項目</td>
+                            </tr>
+                            <tr>
+                                <td>有機体（Organisms）</td>
+                                <td>分子と原子の複合体</td>
+                                <td>ヘッダー、フォーム、カードリスト</td>
+                            </tr>
+                            <tr>
+                                <td>テンプレート</td>
+                                <td>ページのレイアウト構造</td>
+                                <td>記事ページ、ダッシュボード</td>
+                            </tr>
+                            <tr>
+                                <td>ページ</td>
+                                <td>具体的なコンテンツを持つインスタンス</td>
+                                <td>ホームページ、プロフィールページ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>コンポーネントライブラリとデザインシステム</h3>
+                    <p>一貫したUI開発を効率化するための仕組みを整備します。</p>
+                    <ul>
+                        <li><strong>デザイントークン：</strong> 色、間隔、タイポグラフィなどの基本要素を変数化</li>
+                        <li><strong>ドキュメント：</strong> 各コンポーネントの使用方法と変種を文書化</li>
+                        <li><strong>Storybook：</strong> コンポーネントを独立して開発・テストするための環境</li>
+                        <li><strong>アクセシビリティ：</strong> 全てのユーザーが利用できるようWCAGガイドラインに準拠</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> コンポーネント構造の提案、コンポーネント間の関係性の整理、デザインシステムの構築アドバイス、アクセシビリティの改善提案などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="state-management" class="subsection">
+                <h3>3.2 状態管理</h3>
+                <p>複雑なUIアプリケーションにおける状態管理の方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>状態の種類</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>状態のタイプ</th>
+                                <th>特徴</th>
+                                <th>管理方法</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ローカル状態</td>
+                                <td>単一コンポーネント内でのみ使用</td>
+                                <td>コンポーネントの内部状態（React: useState）</td>
+                            </tr>
+                            <tr>
+                                <td>コンポーネント間共有状態</td>
+                                <td>関連コンポーネント間で共有</td>
+                                <td>コンテキストまたは状態リフトアップ（React: useContext）</td>
+                            </tr>
+                            <tr>
+                                <td>グローバル状態</td>
+                                <td>アプリケーション全体で共有</td>
+                                <td>状態管理ライブラリ（Redux, Zustand等）</td>
+                            </tr>
+                            <tr>
+                                <td>サーバー状態</td>
+                                <td>APIから取得するデータ</td>
+                                <td>データフェッチングライブラリ（React Query, SWR等）</td>
+                            </tr>
+                            <tr>
+                                <td>URL状態</td>
+                                <td>URLに反映される状態</td>
+                                <td>ルーティングライブラリ（React Router等）</td>
+                            </tr>
+                            <tr>
+                                <td>フォーム状態</td>
+                                <td>ユーザー入力データ</td>
+                                <td>フォームライブラリ（Formik, React Hook Form等）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>状態管理パターン</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>Flux/Redux</h4>
+                            <p>単方向データフローと予測可能な状態変更</p>
+                            <ul>
+                                <li>アクション：状態変更の意図を表現</li>
+                                <li>ディスパッチャー：アクションをストアに送信</li>
+                                <li>ストア：状態を保持し、純粋関数で更新</li>
+                                <li>ビュー：状態に基づいてUIを描画</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Context API + Reducers</h4>
+                            <p>Reduxの軽量版としてのReactネイティブ実装</p>
+                            <ul>
+                                <li>プロバイダー：状態をコンポーネントツリーに提供</li>
+                                <li>コンシューマー：必要な状態にアクセス</li>
+                                <li>Reducer：状態更新のロジックを純粋関数で定義</li>
+                                <li>ディスパッチ：アクションを発行</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 過度に複雑な状態管理は避け、アプリケーションの規模と要件に合わせて適切な方法を選択しましょう。小規模なアプリケーションではローカル状態とコンテキストで十分な場合が多いです。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> 適切な状態管理戦略の提案、状態構造の設計、状態更新ロジックの整理、複雑な状態管理パターンの解説などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="responsive" class="subsection">
+                <h3>3.3 レスポンシブデザイン</h3>
+                <p>様々なデバイスやスクリーンサイズで最適に表示されるUIを設計する方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>レスポンシブデザインの基本原則</h3>
+                    <ul>
+                        <li><strong>フルードグリッド：</strong> 固定ピクセルではなく相対的な単位（%、em、rem）を使用</li>
+                        <li><strong>フレキシブルイメージ：</strong> 画像やメディアがコンテナサイズに適応するよう設定</li>
+                        <li><strong>メディアクエリ：</strong> 画面サイズに応じてレイアウトを変更</li>
+                        <li><strong>ビューポート設定：</strong> デバイスの実際の幅に合わせた表示</li>
+                        <li><strong>コンテンツ優先順位：</strong> 小さい画面では重要なコンテンツを優先表示</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>モバイルファースト vs デスクトップファースト</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>アプローチ</th>
+                                <th>概要</th>
+                                <th>メリット</th>
+                                <th>適用シナリオ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>モバイルファースト</td>
+                                <td>小さい画面向けに設計し、大きな画面に拡張</td>
+                                <td>必要最小限のコンテンツに集中、パフォーマンス向上</td>
+                                <td>モバイルユーザーが多い場合、コンテンツ中心のサイト</td>
+                            </tr>
+                            <tr>
+                                <td>デスクトップファースト</td>
+                                <td>大きい画面向けに設計し、小さな画面に縮小</td>
+                                <td>複雑なレイアウトや機能の実装が容易</td>
+                                <td>デスクトップユーザーが多い場合、機能豊富なアプリケーション</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>レスポンシブUIを実現するためのツール</h3>
+                    <ul>
+                        <li><strong>CSSフレームワーク：</strong> Bootstrap、Tailwind CSS、Bulmaなど</li>
+                        <li><strong>Flexbox/Grid：</strong> モダンなCSS機能を活用したレイアウト</li>
+                        <li><strong>CSSプリプロセッサ：</strong> Sass、Lessなどによる効率的なスタイル定義</li>
+                        <li><strong>デバイスエミュレーション：</strong> ブラウザの開発者ツールを使った多デバイステスト</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> レスポンシブデザインの戦略提案、ブレイクポイントの設定アドバイス、特定の要素のレスポンシブな実装方法の提案、モバイルとデスクトップでの表示の違いなどをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="performance" class="subsection">
+                <h3>3.4 パフォーマンス最適化</h3>
+                <p>ユーザー体験を向上させるためのフロントエンドパフォーマンス最適化手法を解説します。</p>
+                
+                <div class="card">
+                    <h3>主要なパフォーマンス指標</h3>
+                    <ul>
+                        <li><strong>FCP (First Contentful Paint)：</strong> 最初のコンテンツが表示されるまでの時間</li>
+                        <li><strong>LCP (Largest Contentful Paint)：</strong> 最大のコンテンツ要素が表示されるまでの時間</li>
+                        <li><strong>TTI (Time to Interactive)：</strong> ページがインタラクティブになるまでの時間</li>
+                        <li><strong>TBT (Total Blocking Time)：</strong> メインスレッドがブロックされている合計時間</li>
+                        <li><strong>CLS (Cumulative Layout Shift)：</strong> 表示中の視覚的な安定性</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>最適化テクニック</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>リソース最適化</h4>
+                            <ul>
+                                <li>画像の最適化（WebP、適切なサイズ）</li>
+                                <li>コード分割とレイジーローディング</li>
+                                <li>アセットの圧縮とミニファイ</li>
+                                <li>効率的なフォントローディング</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>レンダリング最適化</h4>
+                            <ul>
+                                <li>不要な再レンダリングの防止</li>
+                                <li>仮想化リスト（大量データの表示）</li>
+                                <li>メモ化によるパフォーマンス向上</li>
+                                <li>Web Workersの活用</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ネットワーク最適化</h4>
+                            <ul>
+                                <li>HTTP/2やHTTP/3の活用</li>
+                                <li>適切なキャッシング戦略</li>
+                                <li>プリロードとプリフェッチ</li>
+                                <li>CDNの活用</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ユーザー体験の最適化</h4>
+                            <ul>
+                                <li>スケルトンUIの活用</li>
+                                <li>進行状況インジケーター</li>
+                                <li>インタラクションの最適化</li>
+                                <li>オフライン対応（PWA）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>パフォーマンス測定ツール</h3>
+                    <ul>
+                        <li><strong>Lighthouse：</strong> パフォーマンス、アクセシビリティ、SEOなどの総合的な評価</li>
+                        <li><strong>Web Vitals：</strong> CoreWeb Vitalsを中心としたパフォーマンス測定</li>
+                        <li><strong>Performance API：</strong> ブラウザのパフォーマンス情報へのアクセス</li>
+                        <li><strong>Chrome DevTools：</strong> 詳細なパフォーマンス分析とボトルネック特定</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> パフォーマンスボトルネックの特定と改善策の提案、バンドルサイズ最適化のアドバイス、レンダリング最適化の手法提案、リソース読み込み戦略の最適化などをサポートできます。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ここからさらに続く各セクション（バックエンド開発、データベース設計と最適化など） -->
+        
+        <section id="backend" class="section">
+            <h2>4. バックエンド開発</h2>
+            <p>クライアント側からのリクエストを処理し、データベースとの連携やビジネスロジックを実行するバックエンド開発について解説します。</p>
+            
+            <!-- バックエンド開発の各サブセクション -->
+            <div id="api-design" class="subsection">
+                <h3>4.1 API設計</h3>
+                <p>クライアントとサーバー間の効率的な通信を実現するAPIの設計手法を解説します。</p>
+                
+                <div class="card">
+                    <h3>RESTful API設計原則</h3>
+                    <ul>
+                        <li><strong>リソース指向：</strong> URLは名詞を使ってリソースを表現（/users, /products）</li>
+                        <li><strong>HTTPメソッド：</strong> 適切なHTTPメソッドでCRUD操作を表現（GET, POST, PUT, DELETE）</li>
+                        <li><strong>ステートレス：</strong> リクエスト間で状態を保持せず、各リクエストは自己完結的</li>
+                        <li><strong>HATEOAS：</strong> レスポンスに関連リソースへのリンクを含め、APIのナビゲーションを容易に</li>
+                        <li><strong>バージョニング：</strong> APIの変更をスムーズに行うためのバージョン管理手法の採用</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>エンドポイント設計のベストプラクティス</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>パターン</th>
+                                <th>例</th>
+                                <th>使用目的</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>コレクション</td>
+                                <td>GET /users</td>
+                                <td>リソースの一覧を取得</td>
+                            </tr>
+                            <tr>
+                                <td>特定リソース</td>
+                                <td>GET /users/123</td>
+                                <td>ID指定でリソースを取得</td>
+                            </tr>
+                            <tr>
+                                <td>サブリソース</td>
+                                <td>GET /users/123/orders</td>
+                                <td>特定リソースに関連する別リソースを取得</td>
+                            </tr>
+                            <tr>
+                                <td>検索・フィルタリング</td>
+                                <td>GET /users?role=admin&status=active</td>
+                                <td>クエリパラメータによるフィルタリング</td>
+                            </tr>
+                            <tr>
+                                <td>アクション実行</td>
+                                <td>POST /users/123/reset-password</td>
+                                <td>リソースに対する特定アクションを実行</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>API仕様とドキュメント</h3>
+                    <p>APIの利用者がスムーズに統合できるよう、明確なドキュメントを作成します。</p>
+                    <ul>
+                        <li><strong>OpenAPI/Swagger：</strong> API仕様を標準化された形式で記述し、対話型ドキュメントを生成</li>
+                        <li><strong>API Blueprint：</strong> マークダウンベースのAPI仕様記述言語</li>
+                        <li><strong>JSONスキーマ：</strong> リクエスト/レスポンスの構造を定義し、バリデーションに活用</li>
+                        <li><strong>利用例の提供：</strong> 一般的なユースケースに対するリクエスト/レスポンス例を示す</li>
+                        <li><strong>エラーハンドリングの説明：</strong> 発生しうるエラーとその対処法を明示</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>GraphQL vs RESTful API</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th>RESTful API</th>
+                                <th>GraphQL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>データ取得</td>
+                                <td>複数のエンドポイントへのリクエストが必要</td>
+                                <td>単一リクエストで必要なデータを正確に指定可能</td>
+                            </tr>
+                            <tr>
+                                <td>オーバーフェッチング</td>
+                                <td>必要以上のデータを取得しがち</td>
+                                <td>必要なデータのみを正確に取得</td>
+                            </tr>
+                            <tr>
+                                <td>バージョニング</td>
+                                <td>明示的なバージョン管理が必要</td>
+                                <td>段階的な進化が可能で、バージョニングが少なくて済む</td>
+                            </tr>
+                            <tr>
+                                <td>キャッシュ</td>
+                                <td>HTTP標準のキャッシュが利用可能</td>
+                                <td>キャッシュが複雑で、追加の実装が必要</td>
+                            </tr>
+                            <tr>
+                                <td>学習曲線</td>
+                                <td>比較的シンプルで広く採用されている</td>
+                                <td>新しい概念の学習が必要</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> API設計の提案、エンドポイント命名のレビュー、OpenAPI仕様の生成、RESTとGraphQLの適切な選択についてのアドバイス、セキュリティの考慮点などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="server-architecture" class="subsection">
+                <h3>4.2 サーバーアーキテクチャ</h3>
+                <p>スケーラブルで保守性の高いバックエンドシステムを構築するためのアーキテクチャ設計を解説します。</p>
+                
+                <div class="card">
+                    <h3>アーキテクチャパターン</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>レイヤードアーキテクチャ</h4>
+                            <p>機能を水平レイヤーに分割し、上位レイヤーが下位レイヤーに依存する構造</p>
+                            <ul>
+                                <li>プレゼンテーション層（API、コントローラー）</li>
+                                <li>ビジネスロジック層（サービス）</li>
+                                <li>データアクセス層（リポジトリ）</li>
+                                <li>データ層（データベース）</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ヘキサゴナルアーキテクチャ</h4>
+                            <p>ビジネスロジックを中心に据え、外部システムとの接続をアダプターで抽象化</p>
+                            <ul>
+                                <li>ドメインモデル（中心部）</li>
+                                <li>ポート（インターフェース）</li>
+                                <li>アダプター（実装）</li>
+                                <li>テスト容易性と柔軟性の向上</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>モノリスからマイクロサービスへの移行</h3>
+                    <p>システムの成長に伴い、モノリスからマイクロサービスへの段階的な移行が必要になることがあります。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>ドメイン分析</h4>
+                            <p>ビジネスドメインを分析し、バウンデッドコンテキストを特定します。</p>
+                        </li>
+                        <li>
+                            <h4>モジュール化</h4>
+                            <p>モノリス内部を明確なモジュールに分割し、依存関係を整理します。</p>
+                        </li>
+                        <li>
+                            <h4>API層の抽出</h4>
+                            <p>モジュール間の通信をAPI経由に変更し、疎結合を実現します。</p>
+                        </li>
+                        <li>
+                            <h4>段階的な分離</h4>
+                            <p>独立性の高いモジュールから順次マイクロサービス化していきます。</p>
+                        </li>
+                        <li>
+                            <h4>共通基盤の整備</h4>
+                            <p>サービス間連携、監視、デプロイなどの共通基盤を整備します。</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>スケーラビリティ設計</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>スケーリング手法</th>
+                                <th>概要</th>
+                                <th>適用シナリオ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>水平スケーリング</td>
+                                <td>サーバーインスタンスの数を増やす</td>
+                                <td>トラフィック増加時、ステートレスサービス</td>
+                            </tr>
+                            <tr>
+                                <td>垂直スケーリング</td>
+                                <td>サーバーのリソース（CPU、メモリ）を増強</td>
+                                <td>リソース集約型処理、一時的な負荷対応</td>
+                            </tr>
+                            <tr>
+                                <td>データベースシャーディング</td>
+                                <td>データを複数のデータベースに分散配置</td>
+                                <td>大規模データセット、高書き込みワークロード</td>
+                            </tr>
+                            <tr>
+                                <td>キャッシング</td>
+                                <td>頻繁にアクセスされるデータをメモリに保持</td>
+                                <td>読み取り頻度の高いデータ、計算コストの高い操作</td>
+                            </tr>
+                            <tr>
+                                <td>非同期処理</td>
+                                <td>時間のかかる処理をバックグラウンドで実行</td>
+                                <td>レスポンスタイムが重要な操作、バッチ処理</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 過度に複雑なアーキテクチャは避け、現在のチームサイズとプロジェクト規模に適したアプローチを選択しましょう。マイクロサービスは小規模チームでは運用オーバーヘッドが大きくなる場合があります。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> プロジェクト要件に基づいた適切なアーキテクチャ提案、スケーラビリティの考慮点、モノリスからマイクロサービスへの移行戦略、システム境界の特定などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="middleware" class="subsection">
+                <h3>4.3 ミドルウェアとサービス層</h3>
+                <p>リクエスト処理のパイプラインとビジネスロジックの構造化について解説します。</p>
+                
+                <div class="card">
+                    <h3>ミドルウェアの役割と種類</h3>
+                    <p>ミドルウェアはリクエスト/レスポンスサイクルの中間処理を担当し、コア機能と横断的関心事を分離します。</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ミドルウェアの種類</th>
+                                <th>役割</th>
+                                <th>実装例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>認証・認可</td>
+                                <td>ユーザー識別と権限検証</td>
+                                <td>JWT検証、ロールベースアクセス制御</td>
+                            </tr>
+                            <tr>
+                                <td>ロギング</td>
+                                <td>リクエスト情報の記録</td>
+                                <td>アクセスログ、エラーログ、監査ログ</td>
+                            </tr>
+                            <tr>
+                                <td>エラーハンドリング</td>
+                                <td>例外の捕捉と適切なレスポンス生成</td>
+                                <td>カスタムエラーレスポンス、スタックトレース管理</td>
+                            </tr>
+                            <tr>
+                                <td>CORS</td>
+                                <td>クロスオリジンリクエストの制御</td>
+                                <td>オリジン検証、プリフライトリクエスト処理</td>
+                            </tr>
+                            <tr>
+                                <td>レート制限</td>
+                                <td>過剰なリクエストの制限</td>
+                                <td>IP/ユーザーベースの制限、トークンバケット</td>
+                            </tr>
+                            <tr>
+                                <td>バリデーション</td>
+                                <td>入力データの検証</td>
+                                <td>スキーマ検証、サニタイズ処理</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>サービス層の設計</h3>
+                    <p>ビジネスロジックをカプセル化し、責任を適切に分割するサービス層を設計します。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>サービスの単一責任</h4>
+                            <p>各サービスは明確に定義された1つの責任を持つべきです。</p>
+                            <ul>
+                                <li>ユーザーサービス：ユーザー管理専用</li>
+                                <li>認証サービス：認証プロセス専用</li>
+                                <li>通知サービス：通知送信専用</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ドメイン駆動設計の適用</h4>
+                            <p>ビジネスドメインに基づいたサービス構造化。</p>
+                            <ul>
+                                <li>エンティティとバリューオブジェクト</li>
+                                <li>集約とリポジトリ</li>
+                                <li>ドメインサービスとアプリケーションサービス</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>依存性の管理</h3>
+                    <p>サービス間の依存関係を適切に管理することで、保守性とテスト容易性を向上させます。</p>
+                    <ul>
+                        <li><strong>依存性注入（DI）：</strong> 外部依存をコンストラクタや関数パラメータとして受け取り、テストを容易に</li>
+                        <li><strong>インターフェース駆動設計：</strong> 実装ではなくインターフェースに依存し、疎結合性を確保</li>
+                        <li><strong>DIコンテナ：</strong> 依存関係を自動解決し、ライフサイクル管理を行うフレームワーク機能の活用</li>
+                        <li><strong>ファクトリパターン：</strong> 複雑なオブジェクト生成ロジックをカプセル化</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> ミドルウェアの適切な配置の提案、サービス層の設計パターン推奨、依存性管理のベストプラクティス、特定のビジネスロジックのモデル化などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="error-handling" class="subsection">
+                <h3>4.4 エラー処理と例外管理</h3>
+                <p>堅牢なアプリケーションに不可欠なエラー処理と例外管理の戦略について解説します。</p>
+                
+                <div class="card">
+                    <h3>エラー処理の原則</h3>
+                    <ul>
+                        <li><strong>早期検出：</strong> エラーは可能な限り早い段階で検出する</li>
+                        <li><strong>明確な報告：</strong> エラーメッセージは具体的かつ行動可能な情報を提供する</li>
+                        <li><strong>適切な抽象化：</strong> 技術的詳細を隠蔽し、適切な抽象化レベルでエラーを報告する</li>
+                        <li><strong>局所的な処理：</strong> エラーは発生に最も近い場所で処理するべき</li>
+                        <li><strong>一貫性：</strong> エラー処理パターンはアプリケーション全体で一貫している必要がある</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>API向けエラーレスポンス設計</h3>
+                    <p>クライアントに対して一貫性のあるエラーレスポンスを提供します。</p>
+                    <pre><code>{
+  "status": 400,
+  "code": "VALIDATION_ERROR",
+  "message": "入力データが無効です",
+  "details": [
+    {
+      "field": "email",
+      "error": "有効なメールアドレス形式ではありません"
+    },
+    {
+      "field": "password",
+      "error": "パスワードは最低8文字必要です"
+    }
+  ],
+  "requestId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "timestamp": "2025-03-04T12:34:56Z"
+}</code></pre>
+                    <p>主要な要素：</p>
+                    <ul>
+                        <li><strong>HTTPステータスコード：</strong> 適切なステータスコードの使用（400, 401, 403, 404, 500など）</li>
+                        <li><strong>エラーコード：</strong> プログラムによる判別が容易な一意のコード</li>
+                        <li><strong>メッセージ：</strong> 人間が理解できるエラーの説明</li>
+                        <li><strong>詳細：</strong> エラーの具体的な内容（特にバリデーションエラー）</li>
+                        <li><strong>リクエストID：</strong> トラブルシューティングのための一意の識別子</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>例外クラス階層の設計</h3>
+                    <p>適切に構造化された例外クラス階層で、異なる種類のエラーを効果的に管理します。</p>
+                    <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 600px; margin: 1rem auto; display: block;">
+                        <!-- 基本クラス -->
+                        <rect x="250" y="20" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="310" y="45" text-anchor="middle" font-size="14">AppException</text>
+                        
+                        <!-- 中間クラス -->
+                        <rect x="100" y="100" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="160" y="125" text-anchor="middle" font-size="14">ClientError</text>
+                        
+                        <rect x="250" y="100" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="310" y="125" text-anchor="middle" font-size="14">ServerError</text>
+                        
+                        <rect x="400" y="100" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="460" y="125" text-anchor="middle" font-size="14">ExternalError</text>
+                        
+                        <!-- 具体的な例外クラス -->
+                        <rect x="20" y="180" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="80" y="205" text-anchor="middle" font-size="14">ValidationError</text>
+                        
+                        <rect x="150" y="180" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="210" y="205" text-anchor="middle" font-size="14">AuthError</text>
+                        
+                        <rect x="280" y="180" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="340" y="205" text-anchor="middle" font-size="14">DatabaseError</text>
+                        
+                        <rect x="410" y="180" width="120" height="40" rx="5" fill="#e9ecef" stroke="#6c757d" stroke-width="1"/>
+                        <text x="470" y="205" text-anchor="middle" font-size="14">APIError</text>
+                        
+                        <!-- 接続線 -->
+                        <line x1="310" y1="60" x2="160" y2="100" stroke="#6c757d" stroke-width="1"/>
+                        <line x1="310" y1="60" x2="310" y2="100" stroke="#6c757d" stroke-width="1"/>
+                        <line x1="310" y1="60" x2="460" y2="100" stroke="#6c757d" stroke-width="1"/>
+                        
+                        <line x1="160" y1="140" x2="80" y2="180" stroke="#6c757d" stroke-width="1"/>
+                        <line x1="160" y1="140" x2="210" y2="180" stroke="#6c757d" stroke-width="1"/>
+                        <line x1="310" y1="140" x2="340" y2="180" stroke="#6c757d" stroke-width="1"/>
+                        <line x1="460" y1="140" x2="470" y2="180" stroke="#6c757d" stroke-width="1"/>
+                    </svg>
+                </div>
+                
+                <div class="card">
+                    <h3>グローバルエラーハンドラー</h3>
+                    <p>未処理の例外を一元的に捕捉し、一貫したエラーレスポンスを生成するメカニズムを実装します。</p>
+                    <ul>
+                        <li><strong>例外変換：</strong> アプリケーション固有の例外を適切なHTTPレスポンスに変換</li>
+                        <li><strong>ロギング：</strong> エラーの詳細情報を適切なレベルでログ記録</li>
+                        <li><strong>通知：</strong> 重大なエラーの場合、運用チームへの通知を送信</li>
+                        <li><strong>クリーンアップ：</strong> リソース解放などの必要な後処理を実行</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> センシティブな情報（内部パス、データベース情報、スタックトレースなど）が本番環境でクライアントに漏洩しないよう注意が必要です。環境に応じてエラー詳細レベルを調整しましょう。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> 適切な例外クラス階層の設計、エラーレスポンス形式の提案、グローバルエラーハンドラーの実装アドバイス、エラーメッセージの改善などをサポートできます。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="database" class="section">
+            <h2>5. データベース設計と最適化</h2>
+            <p>効率的なデータ管理と高速なクエリ実行を可能にするデータベース設計と最適化の手法を解説します。</p>
+            
+            <div id="data-modeling" class="subsection">
+                <h3>5.1 データモデリング</h3>
+                <p>ビジネス要件に基づいた効率的で一貫性のあるデータベースモデルの設計方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>エンティティリレーションシップモデリング</h3>
+                    <p>リレーショナルデータベースのデータ構造を視覚的に表現するER図の作成手法です。</p>
+                    <ul>
+                        <li><strong>エンティティ：</strong> 現実世界のオブジェクト（ユーザー、商品、注文など）</li>
+                        <li><strong>属性：</strong> エンティティの特性（名前、価格、日付など）</li>
+                        <li><strong>リレーションシップ：</strong> エンティティ間の関連（1対1、1対多、多対多）</li>
+                        <li><strong>キー：</strong> 主キー、外部キー、複合キーなどによる一意性と参照整合性の確保</li>
+                    </ul>
+                    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 700px; margin: 1rem auto; display: block;">
+                        <!-- ユーザーテーブル -->
+                        <rect x="50" y="50" width="150" height="100" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="50" y1="80" x2="200" y2="80" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="125" y="70" text-anchor="middle" font-weight="bold">User</text>
+                        <text x="60" y="100" font-size="12">PK: user_id</text>
+                        <text x="60" y="120" font-size="12">name</text>
+                        <text x="60" y="140" font-size="12">email</text>
+                        
+                        <!-- 注文テーブル -->
+                        <rect x="300" y="50" width="150" height="100" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="300" y1="80" x2="450" y2="80" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="375" y="70" text-anchor="middle" font-weight="bold">Order</text>
+                        <text x="310" y="100" font-size="12">PK: order_id</text>
+                        <text x="310" y="120" font-size="12">FK: user_id</text>
+                        <text x="310" y="140" font-size="12">order_date</text>
+                        
+                        <!-- 商品テーブル -->
+                        <rect x="550" y="50" width="150" height="100" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="550" y1="80" x2="700" y2="80" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="625" y="70" text-anchor="middle" font-weight="bold">Product</text>
+                        <text x="560" y="100" font-size="12">PK: product_id</text>
+                        <text x="560" y="120" font-size="12">name</text>
+                        <text x="560" y="140" font-size="12">price</text>
+                        
+                        <!-- リレーションシップ線 -->
+                        <line x1="200" y1="100" x2="300" y2="100" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="220" y="90" font-size="12">1</text>
+                        <text x="280" y="90" font-size="12">N</text>
+                        
+                        <!-- 多対多関連 -->
+                        <rect x="425" y="130" width="100" height="60" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="425" y1="150" x2="525" y2="150" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="475" y="145" text-anchor="middle" font-size="10" font-weight="bold">OrderItem</text>
+                        <text x="435" y="165" font-size="10">FK: order_id</text>
+                        <text x="435" y="180" font-size="10">FK: product_id</text>
+                        
+                        <line x1="450" y1="120" x2="460" y2="130" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="550" y1="120" x2="490" y2="130" stroke="#3a86ff" stroke-width="2"/>
+                    </svg>
+                </div>
+                
+                <div class="card">
+                    <h3>正規化と非正規化</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>手法</th>
+                                <th>概要</th>
+                                <th>メリット</th>
+                                <th>デメリット</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>正規化</td>
+                                <td>冗長性排除のために関連データを分割</td>
+                                <td>データ整合性の向上、更新アノマリー防止</td>
+                                <td>複雑なクエリ、結合による性能低下</td>
+                            </tr>
+                            <tr>
+                                <td>第1正規形</td>
+                                <td>原子的な値のみを含む</td>
+                                <td>検索と更新の効率化</td>
+                                <td>テーブル数の増加</td>
+                            </tr>
+                            <tr>
+                                <td>第2正規形</td>
+                                <td>部分関数従属性の排除</td>
+                                <td>冗長性の削減</td>
+                                <td>テーブル間の関連管理が複雑化</td>
+                            </tr>
+                            <tr>
+                                <td>第3正規形</td>
+                                <td>推移的関数従属性の排除</td>
+                                <td>さらなる冗長性削減</td>
+                                <td>より複雑な結合が必要</td>
+                            </tr>
+                            <tr>
+                                <td>非正規化</td>
+                                <td>読み取り性能向上のためにデータを複製</td>
+                                <td>結合の削減、クエリ性能向上</td>
+                                <td>更新時の整合性維持が複雑</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>NoSQLモデリング手法</h3>
+                    <p>NoSQLデータベースでは、データアクセスパターンを優先したモデリングが重要です。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>埋め込みモデル</h4>
+                            <p>関連データを単一ドキュメントに埋め込む</p>
+                            <pre><code>{
+  "_id": "user123",
+  "name": "山田太郎",
+  "addresses": [
+    {
+      "type": "home",
+      "street": "桜町1-2-3",
+      "city": "東京"
+    },
+    {
+      "type": "work",
+      "street": "丸の内1-1",
+      "city": "東京"
+    }
+  ]
+}</code></pre>
+                        </div>
+                        <div>
+                            <h4>参照モデル</h4>
+                            <p>関連ドキュメントへの参照を保持</p>
+                            <pre><code>{
+  "_id": "order456",
+  "date": "2025-03-04",
+  "user_id": "user123",
+  "items": [
+    {
+      "product_id": "prod789",
+      "quantity": 2
+    },
+    {
+      "product_id": "prod101",
+      "quantity": 1
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> 要件に基づいたデータモデルの提案、ER図の作成、正規化レベルの推奨、リレーショナルモデルとNoSQLモデルの比較検討などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="sql-nosql" class="subsection">
+                <h3>5.2 SQLとNoSQLの選択</h3>
+                <p>プロジェクトの要件に応じた適切なデータベース種類の選択方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>データベースタイプの比較</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th>リレーショナル（SQL）</th>
+                                <th>ドキュメント指向</th>
+                                <th>キーバリュー</th>
+                                <th>カラム指向</th>
+                                <th>グラフ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>データ構造</td>
+                                <td>テーブル、行、列</td>
+                                <td>JSONドキュメント</td>
+                                <td>シンプルなキーと値</td>
+                                <td>カラムファミリー</td>
+                                <td>ノードとエッジ</td>
+                            </tr>
+                            <tr>
+                                <td>クエリ言語</td>
+                                <td>SQL</td>
+                                <td>独自クエリAPI</td>
+                                <td>キーベース操作</td>
+                                <td>SQLライク</td>
+                                <td>独自言語</td>
+                            </tr>
+                            <tr>
+                                <td>スキーマ</td>
+                                <td>固定的</td>
+                                <td>柔軟、スキーマレス</td>
+                                <td>なし</td>
+                                <td>半構造化</td>
+                                <td>柔軟</td>
+                            </tr>
+                            <tr>
+                                <td>トランザクション</td>
+                                <td>完全なACID</td>
+                                <td>部分的/オプション</td>
+                                <td>単一キーのみ</td>
+                                <td>限定的</td>
+                                <td>部分的</td>
+                            </tr>
+                            <tr>
+                                <td>スケーラビリティ</td>
+                                <td>垂直中心</td>
+                                <td>水平容易</td>
+                                <td>非常に高い</td>
+                                <td>非常に高い</td>
+                                <td>中程度</td>
+                            </tr>
+                            <tr>
+                                <td>代表例</td>
+                                <td>MySQL, PostgreSQL</td>
+                                <td>MongoDB, Firestore</td>
+                                <td>Redis, DynamoDB</td>
+                                <td>Cassandra, HBase</td>
+                                <td>Neo4j, ArangoDB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>選択基準</h3>
+                    <p>データベース選択に影響を与える主な要因です。</p>
+                    <ul>
+                        <li><strong>データ構造：</strong> データの複雑さと関連性</li>
+                        <li><strong>クエリパターン：</strong> 読み取り/書き込み比率、クエリ複雑性</li>
+                        <li><strong>一貫性要件：</strong> 強い整合性か結果整合性か</li>
+                        <li><strong>スケーラビリティ：</strong> 予想される成長と負荷</li>
+                        <li><strong>開発速度：</strong> 柔軟性とイテレーションのしやすさ</li>
+                        <li><strong>予算と運用コスト：</strong> ライセンス、ホスティング、管理の容易さ</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>ユースケース別の推奨データベース</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ユースケース</th>
+                                <th>推奨データベースタイプ</th>
+                                <th>理由</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>金融取引</td>
+                                <td>リレーショナル</td>
+                                <td>ACID特性、データ整合性の重要性</td>
+                            </tr>
+                            <tr>
+                                <td>コンテンツ管理</td>
+                                <td>ドキュメント指向</td>
+                                <td>スキーマの柔軟性、階層データ構造</td>
+                            </tr>
+                            <tr>
+                                <td>セッション管理</td>
+                                <td>キーバリュー</td>
+                                <td>高速なアクセス、シンプルな構造</td>
+                            </tr>
+                            <tr>
+                                <td>IoTセンサーデータ</td>
+                                <td>カラム指向</td>
+                                <td>大量データの書き込み、時系列分析</td>
+                            </tr>
+                            <tr>
+                                <td>ソーシャルネットワーク</td>
+                                <td>グラフ</td>
+                                <td>関係性の表現と探索が容易</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>ポリグロット永続化</h3>
+                    <p>単一のアプリケーションで複数のデータベースタイプを組み合わせるアプローチです。</p>
+                    <ul>
+                        <li><strong>ユースケースに最適化：</strong> 各データベースを特定の機能に最適なものを選択</li>
+                        <li><strong>システム分解：</strong> 機能別のマイクロサービスに異なるデータストアを使用</li>
+                        <li><strong>段階的な導入：</strong> 既存のシステムに並行して新しいデータベースを導入</li>
+                        <li><strong>課題：</strong> データ整合性の維持、複雑な運用管理、学習コスト</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 流行りの技術やパフォーマンスのみに基づいてデータベースを選択するのではなく、プロジェクトの具体的な要件、チームの専門知識、長期的な保守性を総合的に考慮することが重要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> プロジェクト要件に基づいたデータベースタイプの推奨、各データベースの長所・短所の分析、複数データベース使用時の統合戦略などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="query-optimization" class="subsection">
+                <h3>5.3 クエリ最適化</h3>
+                <p>データベースクエリのパフォーマンスを向上させるための最適化手法を解説します。</p>
+                
+                <div class="card">
+                    <h3>インデックス設計</h3>
+                    <p>適切なインデックスはクエリパフォーマンスに大きな影響を与えます。</p>
+                    <ul>
+                        <li><strong>単一カラムインデックス：</strong> 単一カラムでのフィルタリング、ソートに有効</li>
+                        <li><strong>複合インデックス：</strong> 複数条件による検索の高速化（順序が重要）</li>
+                        <li><strong>カバリングインデックス：</strong> クエリが必要とするすべての列を含むインデックス</li>
+                        <li><strong>部分インデックス：</strong> 条件に一致する行のみをインデックス化</li>
+                        <li><strong>インデックス管理：</strong> 未使用インデックスの削除、断片化の解消</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>クエリパフォーマンス分析</h3>
+                    <p>クエリのボトルネックを特定し改善するための分析手法です。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>実行計画の分析</h4>
+                            <p>EXPLAIN（SQLデータベース）やプロファイラを使用してクエリの実行計画と処理ステップを確認します。</p>
+                        </li>
+                        <li>
+                            <h4>ボトルネックの特定</h4>
+                            <p>フルテーブルスキャン、非効率なジョイン、一時テーブルの過剰使用などの問題を特定します。</p>
+                        </li>
+                        <li>
+                            <h4>インデックス最適化</h4>
+                            <p>クエリパターンに基づいて適切なインデックスを作成または修正します。</p>
+                        </li>
+                        <li>
+                            <h4>クエリ書き換え</h4>
+                            <p>効率的な方法でクエリを再構築し、パフォーマンスを向上させます。</p>
+                        </li>
+                        <li>
+                            <h4>結果の検証</h4>
+                            <p>最適化前後のパフォーマンスを測定して改善を確認します。</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>一般的なクエリ最適化テクニック</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>SQLデータベース</h4>
+                            <ul>
+                                <li>SELECT * の代わりに必要な列のみを指定</li>
+                                <li>JOINS の最適化（結合順序、結合条件）</li>
+                                <li>サブクエリよりも結合を優先</li>
+                                <li>適切なWHERE句の配置</li>
+                                <li>LIMIT/OFFSETの効率的な使用</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>NoSQLデータベース</h4>
+                            <ul>
+                                <li>アクセスパターンに基づいたデータモデリング</li>
+                                <li>複合キーの効果的な使用</li>
+                                <li>プロジェクション（必要フィールドのみ取得）</li>
+                                <li>適切なパーティショニング戦略</li>
+                                <li>インデックス作成とクエリ条件の一致</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>クエリキャッシング戦略</h3>
+                    <p>繰り返しアクセスされるデータのキャッシングによるパフォーマンス向上手法です。</p>
+                    <ul>
+                        <li><strong>データベースレベルのキャッシュ：</strong> 多くのデータベースが提供する組み込みキャッシュ機能</li>
+                        <li><strong>アプリケーションキャッシュ：</strong> Redis, Memcachedなどを使用した外部キャッシュ</li>
+                        <li><strong>クエリ結果キャッシュ：</strong> 頻繁に実行されるクエリの結果をキャッシュ</li>
+                        <li><strong>キャッシュ無効化戦略：</strong> TTL, LRU, イベントベースの無効化など</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 過度な最適化や早期の最適化は避け、実際のパフォーマンス問題が確認された場合に対応しましょう。また、最適化の前には必ずベンチマークを取り、最適化後の効果を測定して検証することが重要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> クエリパフォーマンスの分析と改善提案、適切なインデックス戦略の推奨、クエリの書き換え候補の提示、キャッシング戦略のアドバイスなどをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="data-access" class="subsection">
+                <h3>5.4 データアクセスパターン</h3>
+                <p>アプリケーションからデータベースへのアクセスを効率化するパターンとテクニックを解説します。</p>
+                
+                <div class="card">
+                    <h3>ORMとデータマッパー</h3>
+                    <p>オブジェクト指向プログラミングとリレーショナルデータベース間のインピーダンスミスマッチを解消する手法です。</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>アプローチ</th>
+                                <th>概要</th>
+                                <th>メリット</th>
+                                <th>デメリット</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>フル機能ORM</td>
+                                <td>オブジェクトとテーブルの完全マッピング</td>
+                                <td>強力な抽象化、生産性向上</td>
+                                <td>オーバーヘッド、複雑なクエリが難しい</td>
+                            </tr>
+                            <tr>
+                                <td>軽量データマッパー</td>
+                                <td>基本的なマッピング機能のみ提供</td>
+                                <td>シンプル、制御しやすい</td>
+                                <td>手動コーディングが増える</td>
+                            </tr>
+                            <tr>
+                                <td>クエリビルダー</td>
+                                <td>プログラム的にSQLを構築</td>
+                                <td>型安全、SQLインジェクション防止</td>
+                                <td>SQLの直接制御がやや制限される</td>
+                            </tr>
+                            <tr>
+                                <td>生のSQL</td>
+                                <td>SQLを直接記述して実行</td>
+                                <td>最大限の制御と最適化</td>
+                                <td>保守性低下、セキュリティリスク</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>リポジトリパターン</h3>
+                    <p>データアクセスロジックをビジネスロジックから分離し、再利用性と保守性を向上させるパターンです。</p>
+                    <pre><code>interface UserRepository {
+    User findById(String id);
+    List<User> findByRole(String role);
+    void save(User user);
+    void delete(String id);
+}
+
+// 実装クラス
+class SqlUserRepository implements UserRepository {
+    // データベース固有の実装
+}
+
+class MongoUserRepository implements UserRepository {
+    // MongoDB固有の実装
+}</code></pre>
+                    <p>メリット：</p>
+                    <ul>
+                        <li>データソースの詳細をカプセル化</li>
+                        <li>ビジネスロジックとデータアクセスの分離</li>
+                        <li>データストア変更時の影響を局所化</li>
+                        <li>単体テストが容易</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>バッチ処理とページング</h3>
+                    <p>大量のデータを効率的に処理するためのパターンです。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>ページングテクニック</h4>
+                            <ul>
+                                <li><strong>オフセットベース：</strong> LIMIT/OFFSET による従来のページング</li>
+                                <li><strong>カーソルベース：</strong> 前回の最後の項目を基準にした効率的なページング</li>
+                                <li><strong>キーセットページング：</strong> インデックスを活用した高速なページング</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>バッチ処理テクニック</h4>
+                            <ul>
+                                <li><strong>チャンク処理：</strong> データを小さな塊に分割して処理</li>
+                                <li><strong>ストリーム処理：</strong> メモリ効率の良いデータストリーム処理</li>
+                                <li><strong>並列処理：</strong> 複数スレッド/プロセスでの同時処理</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>CQRSパターン</h3>
+                    <p>Command Query Responsibility Segregation - 読み取りと書き込みの責務を分離するパターンです。</p>
+                    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 700px; margin: 1rem auto; display: block;">
+                        <!-- コマンド側 -->
+                        <rect x="50" y="50" width="200" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="150" y="75" text-anchor="middle" font-weight="bold">コマンドモデル</text>
+                        
+                        <rect x="50" y="120" width="200" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="150" y="145" text-anchor="middle">書き込み最適化データストア</text>
+                        
+                        <!-- クエリ側 -->
+                        <rect x="450" y="50" width="200" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="550" y="75" text-anchor="middle" font-weight="bold">クエリモデル</text>
+                        
+                        <rect x="450" y="120" width="200" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="550" y="145" text-anchor="middle">読み取り最適化データストア</text>
+                        
+                        <!-- 接続と説明 -->
+                        <line x1="150" y1="90" x2="150" y2="120" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="550" y1="90" x2="550" y2="120" stroke="#3a86ff" stroke-width="2"/>
+                        
+                        <line x1="250" y1="140" x2="450" y2="140" stroke="#3a86ff" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="350" y="130" text-anchor="middle" font-size="12">同期/非同期更新</text>
+                        
+                        <text x="150" y="30" text-anchor="middle" font-size="14">コマンド（書き込み）</text>
+                        <text x="550" y="30" text-anchor="middle" font-size="14">クエリ（読み取り）</text>
+                    </svg>
+                    <p>適用シナリオ：</p>
+                    <ul>
+                        <li>読み取りと書き込みの負荷パターンが大きく異なる場合</li>
+                        <li>複雑なドメインモデルと簡略化された読み取りモデルが必要な場合</li>
+                        <li>読み取り性能が特に重要な場合</li>
+                        <li>イベントソーシングと組み合わせた高度なシステム</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> アプリケーション要件に適したデータアクセスパターンの提案、ORM選択のアドバイス、リポジトリインターフェースの設計、CQRSの実装アプローチなどをサポートできます。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="authentication" class="section">
+            <h2>6. 認証と権限管理</h2>
+            <p>セキュアなユーザー認証とアクセス制御を実現するための認証・権限管理システムについて解説します。</p>
+            
+            <div id="auth-methods" class="subsection">
+                <h3>6.1 認証手法</h3>
+                <p>ユーザーの身元を確認するための様々な認証手法とそれぞれの特徴を解説します。</p>
+                
+                <div class="card">
+                    <h3>認証の基本要素</h3>
+                    <p>認証は以下の要素の組み合わせに基づくことが多いです：</p>
+                    <ul>
+                        <li><strong>知識要素（何か知っているもの）：</strong> パスワード、PIN、秘密の質問</li>
+                        <li><strong>所持要素（何か持っているもの）：</strong> スマートフォン、セキュリティキー、認証アプリ</li>
+                        <li><strong>生体要素（あなた自身の特徴）：</strong> 指紋、顔認証、声紋</li>
+                        <li><strong>場所要素（どこにいるか）：</strong> GPS位置情報、特定のネットワーク</li>
+                        <li><strong>行動要素（どのように行動するか）：</strong> キーストロークパターン、操作習慣</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>一般的な認証メカニズム</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>認証メカニズム</th>
+                                <th>概要</th>
+                                <th>長所</th>
+                                <th>短所</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>パスワード認証</td>
+                                <td>ユーザー名とパスワードによる検証</td>
+                                <td>実装が簡単、広く普及</td>
+                                <td>パスワード漏洩リスク、管理負担</td>
+                            </tr>
+                            <tr>
+                                <td>多要素認証(MFA)</td>
+                                <td>複数の認証要素の組み合わせ</td>
+                                <td>大幅なセキュリティ向上</td>
+                                <td>ユーザー体験の複雑化</td>
+                            </tr>
+                            <tr>
+                                <td>ソーシャルログイン</td>
+                                <td>Google、Facebookなどの外部認証</td>
+                                <td>登録障壁の低減、管理負担軽減</td>
+                                <td>外部サービスへの依存、プライバシー懸念</td>
+                            </tr>
+                            <tr>
+                                <td>トークンベース認証</td>
+                                <td>JWT等のトークンによる認証</td>
+                                <td>ステートレス、スケーラビリティ</td>
+                                <td>トークン管理、失効処理の複雑さ</td>
+                            </tr>
+                            <tr>
+                                <td>パスキー（WebAuthn）</td>
+                                <td>公開鍵暗号を用いたパスワードレス認証</td>
+                                <td>フィッシング耐性、優れたUX</td>
+                                <td>まだ普及途上、実装の複雑さ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>JWTベース認証の実装</h3>
+                    <p>JSON Web Token（JWT）はステートレスな認証を実現する人気のある方法です。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>JWTの構造</h4>
+                            <ul>
+                                <li><strong>ヘッダー：</strong> トークンタイプと署名アルゴリズム</li>
+                                <li><strong>ペイロード：</strong> クレーム（ユーザー情報など）</li>
+                                <li><strong>署名：</strong> トークンの真正性を検証</li>
+                            </ul>
+                            <p>形式: <code>xxxxx.yyyyy.zzzzz</code></p>
+                        </div>
+                        <div>
+                            <h4>認証フロー</h4>
+                            <ol>
+                                <li>ユーザーがログイン情報を送信</li>
+                                <li>サーバーが認証情報を検証</li>
+                                <li>JWTを生成して返送</li>
+                                <li>クライアントがJWTを保存</li>
+                                <li>以降のリクエストにJWTを添付</li>
+                                <li>サーバーがJWTを検証</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 700px; margin: 1rem auto; display: block;">
+                        <!-- クライアント -->
+                        <rect x="50" y="50" width="150" height="100" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="125" y="85" text-anchor="middle" font-weight="bold">クライアント</text>
+                        <text x="125" y="110" text-anchor="middle" font-size="12">JWTを保存</text>
+                        
+                        <!-- サーバー -->
+                        <rect x="500" y="50" width="150" height="100" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="575" y="85" text-anchor="middle" font-weight="bold">サーバー</text>
+                        <text x="575" y="110" text-anchor="middle" font-size="12">JWTを検証</text>
+                        
+                        <!-- 矢印1: ログイン -->
+                        <line x1="200" y1="70" x2="500" y2="70" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="350" y="60" text-anchor="middle" font-size="12">1. ログイン情報</text>
+                        
+                        <!-- 矢印2: JWT発行 -->
+                        <line x1="500" y1="90" x2="200" y2="90" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="350" y="105" text-anchor="middle" font-size="12">2. JWT発行</text>
+                        
+                        <!-- 矢印3: APIリクエスト -->
+                        <line x1="200" y1="110" x2="500" y2="110" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="350" y="125" text-anchor="middle" font-size="12">3. APIリクエスト（JWT付き）</text>
+                        
+                        <!-- 矢印4: レスポンス -->
+                        <line x1="500" y1="130" x2="200" y2="130" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="350" y="145" text-anchor="middle" font-size="12">4. APIレスポンス</text>
+                        
+                        <!-- マーカー定義 -->
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                                markerWidth="6" markerHeight="6" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#3a86ff"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+                
+                <div class="card">
+                    <h3>OAuth 2.0と認可コードフロー</h3>
+                    <p>外部サービス（Google, GitHub等）を利用した認証の実装方法です。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>ユーザーがログインを開始</h4>
+                            <p>アプリケーションが認可サーバーへのリダイレクトURLを生成</p>
+                        </li>
+                        <li>
+                            <h4>ユーザーが外部サービスで認証</h4>
+                            <p>認可サーバーでのログインとアクセス許可</p>
+                        </li>
+                        <li>
+                            <h4>アプリケーションに認可コードが返送</h4>
+                            <p>リダイレクトURIに認可コードがついて戻る</p>
+                        </li>
+                        <li>
+                            <h4>バックエンドでアクセストークン取得</h4>
+                            <p>認可コードをアクセストークンに交換</p>
+                        </li>
+                        <li>
+                            <h4>ユーザー情報の取得</h4>
+                            <p>アクセストークンを使ってユーザープロファイル情報を取得</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 認証情報はHTTPS通信でのみやり取りし、パスワードは必ず強力なハッシュ化（bcryptなど）を行い、平文で保存しないでください。JWTのペイロードは暗号化されていないため、機密情報を含めないことが重要です。また、トークンの有効期限は適切に設定し、必要に応じて更新メカニズムを実装してください。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> プロジェクトに最適な認証方式の提案、JWT構造の設計、OAuth連携フローの解説、セキュリティ上の考慮点のアドバイスなどをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="authorization" class="subsection">
+                <h3>6.2 権限モデル</h3>
+                <p>認証されたユーザーに対して、適切なリソースへのアクセス権を制御する方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>権限モデルの種類</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>モデル</th>
+                                <th>概要</th>
+                                <th>適用シナリオ</th>
+                                <th>実装の複雑さ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ロールベースアクセス制御（RBAC）</td>
+                                <td>ユーザーにロールを割り当て、ロールに基づいて権限を付与</td>
+                                <td>組織構造に基づく権限管理</td>
+                                <td>中程度</td>
+                            </tr>
+                            <tr>
+                                <td>属性ベースアクセス制御（ABAC）</td>
+                                <td>ユーザー属性、リソース属性、環境条件などに基づく柔軟な権限評価</td>
+                                <td>複雑な条件付き権限が必要な場合</td>
+                                <td>高</td>
+                            </tr>
+                            <tr>
+                                <td>ディスクリーショナリアクセス制御（DAC）</td>
+                                <td>リソースの所有者が他ユーザーの権限を制御</td>
+                                <td>ファイル共有、コラボレーションツール</td>
+                                <td>中〜高</td>
+                            </tr>
+                            <tr>
+                                <td>強制アクセス制御（MAC）</td>
+                                <td>システム全体で強制される厳格なポリシー</td>
+                                <td>高セキュリティ要件、機密情報の取り扱い</td>
+                                <td>非常に高い</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>ロールベースアクセス制御（RBAC）の実装</h3>
+                    <p>最も一般的な権限モデルであるRBACの実装方法です。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>データモデル</h4>
+                            <pre><code>User {
+  id: string
+  username: string
+  password: string
+  roles: Role[]
+}
+
+Role {
+  id: string
+  name: string
+  permissions: Permission[]
+}
+
+Permission {
+  id: string
+  name: string
+  resource: string
+  action: string  // read, write, delete等
+}</code></pre>
+                        </div>
+                        <div>
+                            <h4>権限チェックフロー</h4>
+                            <ol>
+                                <li>ユーザーが認証される</li>
+                                <li>ユーザーのロールを取得</li>
+                                <li>アクセス対象のリソースと操作を特定</li>
+                                <li>ロールに紐づく権限を確認</li>
+                                <li>権限があればアクセスを許可</li>
+                                <li>なければアクセス拒否(403)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>階層型ロールと権限の継承</h3>
+                    <p>ロール間の階層関係を定義し、上位ロールが下位ロールの権限を継承する仕組みです。</p>
+                    <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 600px; margin: 1rem auto; display: block;">
+                        <!-- Admin -->
+                        <rect x="250" y="20" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="300" y="45" text-anchor="middle" font-weight="bold">管理者</text>
+                        
+                        <!-- Manager -->
+                        <rect x="100" y="100" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="150" y="125" text-anchor="middle" font-weight="bold">マネージャー</text>
+                        
+                        <!-- Editor -->
+                        <rect x="250" y="100" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="300" y="125" text-anchor="middle" font-weight="bold">編集者</text>
+                        
+                        <!-- Reviewer -->
+                        <rect x="400" y="100" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="450" y="125" text-anchor="middle" font-weight="bold">レビュワー</text>
+                        
+                        <!-- User -->
+                        <rect x="175" y="180" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="225" y="205" text-anchor="middle" font-weight="bold">一般ユーザー</text>
+                        
+                        <!-- Guest -->
+                        <rect x="325" y="180" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="375" y="205" text-anchor="middle" font-weight="bold">ゲスト</text>
+                        
+                        <!-- 接続線 -->
+                        <line x1="300" y1="60" x2="150" y2="100" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="300" y1="60" x2="300" y2="100" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="300" y1="60" x2="450" y2="100" stroke="#3a86ff" stroke-width="2"/>
+                        
+                        <line x1="150" y1="140" x2="225" y2="180" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="300" y1="140" x2="225" y2="180" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="300" y1="140" x2="375" y2="180" stroke="#3a86ff" stroke-width="2"/>
+                        <line x1="450" y1="140" x2="375" y2="180" stroke="#3a86ff" stroke-width="2"/>
+                    </svg>
+                    <p>実装のポイント：</p>
+                    <ul>
+                        <li>ロール間の親子関係をデータベースで表現</li>
+                        <li>権限チェック時に親ロールの権限も考慮</li>
+                        <li>循環参照を防ぐ仕組みの実装</li>
+                        <li>適切な粒度でのロール設計</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>権限実装のベストプラクティス</h3>
+                    <ul>
+                        <li><strong>最小権限の原則：</strong> ユーザーには必要最小限の権限のみを付与</li>
+                        <li><strong>職務分掌：</strong> 重要な操作は複数人の承認が必要な設計に</li>
+                        <li><strong>多層防御：</strong> UI、API、データベース各レベルでの権限チェック</li>
+                        <li><strong>権限管理UI：</strong> 適切な権限管理インターフェースの提供</li>
+                        <li><strong>監査ログ：</strong> 権限変更や重要操作の記録</li>
+                        <li><strong>定期的な見直し：</strong> 権限設定の定期的なレビューと整理</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> フロントエンドでの権限チェックはUX向上のためであり、セキュリティ対策としては不十分です。必ずバックエンドでも権限チェックを行い、クライアント側の改ざんを防止してください。また、権限が足りない場合のエラーメッセージは、攻撃者に情報を与えないよう適切に設計する必要があります。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> プロジェクトに適した権限モデルの提案、RBACの設計支援、権限チェックロジックの実装アドバイス、権限テストシナリオの提案などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="security" class="subsection">
+                <h3>6.3 セキュリティベストプラクティス</h3>
+                <p>認証・認可システムを含むアプリケーション全体のセキュリティを強化するためのベストプラクティスを解説します。</p>
+                
+                <div class="card">
+                    <h3>一般的なセキュリティ脅威と対策</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>脅威</th>
+                                <th>説明</th>
+                                <th>対策</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>クロスサイトスクリプティング（XSS）</td>
+                                <td>悪意のあるスクリプトの注入と実行</td>
+                                <td>入力サニタイズ、CSPの実装、HTTPOnly Cookie</td>
+                            </tr>
+                            <tr>
+                                <td>クロスサイトリクエストフォージェリ（CSRF）</td>
+                                <td>ユーザーの認証情報を使った不正リクエスト</td>
+                                <td>CSRFトークン、SameSite Cookie、Refererチェック</td>
+                            </tr>
+                            <tr>
+                                <td>SQLインジェクション</td>
+                                <td>悪意のあるSQLコードの注入</td>
+                                <td>パラメータ化クエリ、ORM、入力検証</td>
+                            </tr>
+                            <tr>
+                                <td>パスワードの脆弱性</td>
+                                <td>弱いパスワードや平文保存</td>
+                                <td>強力なハッシュ化（bcrypt等）、パスワードポリシー</td>
+                            </tr>
+                            <tr>
+                                <td>セッションハイジャック</td>
+                                <td>他者のセッションの不正利用</td>
+                                <td>セキュアCookie、セッション再生成、IP検証</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>セキュアなパスワード管理</h3>
+                    <p>ユーザーパスワードを安全に管理するためのテクニックです。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>強力なハッシュアルゴリズムの使用</h4>
+                            <p>bcrypt, Argon2, PBKDF2などの最新アルゴリズムを使用</p>
+                        </li>
+                        <li>
+                            <h4>ソルトの適用</h4>
+                            <p>各パスワードに一意のランダムソルトを追加</p>
+                        </li>
+                        <li>
+                            <h4>ワークファクターの適切な設定</h4>
+                            <p>計算コストの設定で総当たり攻撃を困難に</p>
+                        </li>
+                        <li>
+                            <h4>パスワードポリシーの実装</h4>
+                            <p>最小長、複雑さ、定期的な変更要求</p>
+                        </li>
+                        <li>
+                            <h4>漏洩パスワードチェック</h4>
+                            <p>既知の漏洩パスワードデータベースとの照合</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>セキュアなAPIアクセス制御</h3>
+                    <p>APIエンドポイントを保護するための仕組みを実装します。</p>
+                    <ul>
+                        <li><strong>認証ミドルウェア：</strong> すべてのエンドポイントに適用する認証チェック</li>
+                        <li><strong>権限ミドルウェア：</strong> ルートごとに必要な権限を検証</li>
+                        <li><strong>レート制限：</strong> 短時間の大量リクエストを防止</li>
+                        <li><strong>APIキー：</strong> 第三者サービスへのアクセス制御</li>
+                        <li><strong>スコープ：</strong> OAuth 2.0などでのアクセス範囲制限</li>
+                        <li><strong>監査ログ：</strong> APIアクセスの記録と監視</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>セキュリティヘッダーの設定</h3>
+                    <p>HTTP応答ヘッダーを適切に設定してブラウザのセキュリティ機能を活用します。</p>
+                    <pre><code>// 一般的なセキュリティヘッダー例
+Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted.cdn.com
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()</code></pre>
+                </div>
+                
+                <div class="card">
+                    <h3>セキュリティテスト</h3>
+                    <p>実装したセキュリティ対策の有効性を検証するテスト手法です。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>静的アプリケーションセキュリティテスト(SAST)</h4>
+                            <ul>
+                                <li>コード解析ツールの活用</li>
+                                <li>セキュリティの脆弱性を早期発見</li>
+                                <li>CI/CDパイプラインに組み込み</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>動的アプリケーションセキュリティテスト(DAST)</h4>
+                            <ul>
+                                <li>実行中アプリケーションのテスト</li>
+                                <li>自動化されたスキャンツール</li>
+                                <li>実環境に近い状態での検証</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ペネトレーションテスト</h4>
+                            <ul>
+                                <li>専門家による模擬攻撃</li>
+                                <li>現実的な脅威シナリオでのテスト</li>
+                                <li>複合的な脆弱性の発見</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>セキュリティコードレビュー</h4>
+                            <ul>
+                                <li>セキュリティ専門家によるレビュー</li>
+                                <li>実装の詳細まで確認</li>
+                                <li>設計レベルの問題も発見可能</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> セキュリティは単発の対策ではなく、継続的なプロセスです。新たな脆弱性は常に発見されるため、セキュリティアップデートの適用、定期的な監査、脅威情報の収集などを継続的に行う必要があります。また、「security by obscurity（隠蔽によるセキュリティ）」に頼らず、適切な暗号化と認証メカニズムを実装することが重要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> セキュリティリスク評価、各環境に適した安全対策の提案、セキュリティヘッダーの設定アドバイス、一般的な脆弱性への対応方法などをサポートできます。また、特定のセキュリティ実装に関するコードレビューも可能です。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="serverless" class="section">
+            <h2>7. サーバーレスアーキテクチャ</h2>
+            <p>インフラストラクチャ管理の負担を軽減し、スケーラビリティを向上させるサーバーレスアーキテクチャについて解説します。</p>
+            
+            <div id="functions" class="subsection">
+                <h3>7.1 関数としてのサービス</h3>
+                <p>サーバーレスコンピューティングの基本である「関数としてのサービス」（FaaS）の概念と実装方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>サーバーレスの基本概念</h3>
+                    <p>サーバーレスとは、インフラストラクチャの管理や運用をクラウドプロバイダーに委ね、開発者がアプリケーションコードに集中できるアプローチです。</p>
+                    <ul>
+                        <li><strong>基本原則：</strong> サーバーは存在するが、開発者が管理する必要がない</li>
+                        <li><strong>イベント駆動：</strong> 関数はイベント（HTTPリクエスト、データ変更など）によってトリガーされる</li>
+                        <li><strong>自動スケーリング：</strong> 負荷に応じて自動的にスケールアップ/ダウン</li>
+                        <li><strong>利用量ベースの課金：</strong> 実際に使用したリソース（実行時間、メモリ）に対してのみ課金</li>
+                        <li><strong>ステートレス：</strong> 関数は基本的にステートレスで、外部サービスを使って状態を保持</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>主要なサーバーレスプラットフォーム</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>プラットフォーム</th>
+                                <th>プロバイダー</th>
+                                <th>特徴</th>
+                                <th>言語サポート</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AWS Lambda</td>
+                                <td>Amazon Web Services</td>
+                                <td>豊富なAWSサービス連携、広範なエコシステム</td>
+                                <td>Node.js, Python, Java, Go, Ruby, .NET, etc</td>
+                            </tr>
+                            <tr>
+                                <td>Azure Functions</td>
+                                <td>Microsoft Azure</td>
+                                <td>Microsoftサービスとの連携、ステートフル関数</td>
+                                <td>C#, JavaScript, Python, PowerShell, etc</td>
+                            </tr>
+                            <tr>
+                                <td>Google Cloud Functions</td>
+                                <td>Google Cloud</td>
+                                <td>Googleサービスとの統合、シンプルなデプロイ</td>
+                                <td>Node.js, Python, Go, Java, etc</td>
+                            </tr>
+                            <tr>
+                                <td>Cloudflare Workers</td>
+                                <td>Cloudflare</td>
+                                <td>エッジでの実行、低レイテンシー</td>
+                                <td>JavaScript, WebAssembly</td>
+                            </tr>
+                            <tr>
+                                <td>Vercel Functions</td>
+                                <td>Vercel</td>
+                                <td>フロントエンド向け、静的サイト連携</td>
+                                <td>Node.js, Go, Python, Ruby</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>サーバーレス関数の設計パターン</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>単一責任関数</h4>
+                            <p>1つの関数が1つの責任を持つ設計</p>
+                            <ul>
+                                <li>明確な関数の境界</li>
+                                <li>シンプルなテストと保守</li>
+                                <li>関数間の依存関係を最小化</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>関数合成</h4>
+                            <p>複数の関数をつなげてワークフローを構築</p>
+                            <ul>
+                                <li>複雑なプロセスを小さな関数に分割</li>
+                                <li>関数間の出力/入力の連鎖</li>
+                                <li>ステップ関数やオーケストレーションの活用</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ファンアウト/ファンイン</h4>
+                            <p>1つの関数が複数の並列処理を開始し、結果を集約</p>
+                            <ul>
+                                <li>大規模データの並列処理</li>
+                                <li>処理時間の短縮</li>
+                                <li>キューやメッセージングの活用</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>関数による層分離</h4>
+                            <p>API、ビジネスロジック、データアクセスの分離</p>
+                            <ul>
+                                <li>関数の役割に基づく分類</li>
+                                <li>レイヤー間の明確なインターフェース</li>
+                                <li>再利用性とテスト容易性の向上</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>コールドスタートと最適化</h3>
+                    <p>サーバーレス関数の初回起動時に発生する遅延（コールドスタート）への対策です。</p>
+                    <ul>
+                        <li><strong>関数サイズの最適化：</strong> 依存関係の削減、コードの最小化</li>
+                        <li><strong>メモリ割り当ての調整：</strong> 適切なメモリ量の設定で処理速度を向上</li>
+                        <li><strong>ウォームスタート戦略：</strong> 定期的な呼び出しで関数をウォームに保つ</li>
+                        <li><strong>依存関係の最適化：</strong> 必要最小限のライブラリの使用</li>
+                        <li><strong>初期化コードの分離：</strong> ハンドラー外での初期化処理の実装</li>
+                        <li><strong>接続プーリング：</strong> データベース接続の再利用</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> サーバーレス関数には実行時間の制限（通常は数分以内）があるため、長時間実行が必要な処理には適していません。また、状態を保持できないため、セッション管理などには外部サービスの活用が必要です。コールドスタートの影響が大きい低レイテンシー要件の厳しいアプリケーションでは、注意が必要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> サーバーレス関数の設計パターン提案、コールドスタート最適化のアドバイス、特定のユースケースに適したサーバーレスアーキテクチャの提案、既存コードのサーバーレス化に関する助言などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="event-driven" class="subsection">
+                <h3>7.2 イベント駆動設計</h3>
+                <p>イベントに基づいてサービスを連携させる、サーバーレスアーキテクチャの中核となる設計手法を解説します。</p>
+                
+                <div class="card">
+                    <h3>イベント駆動アーキテクチャの基本</h3>
+                    <p>イベント生成者と消費者の疎結合によるシステム構築方法です。</p>
+                    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 700px; margin: 1rem auto; display: block;">
+                        <!-- イベント生成者 -->
+                        <rect x="50" y="50" width="150" height="60" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="125" y="85" text-anchor="middle" font-weight="bold">イベント生成者</text>
+                        
+                        <!-- イベントバス -->
+                        <rect x="250" y="100" width="200" height="50" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="350" y="130" text-anchor="middle" font-weight="bold">イベントバス/キュー</text>
+                        
+                        <!-- イベント消費者 -->
+                        <rect x="500" y="50" width="150" height="60" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="575" y="85" text-anchor="middle" font-weight="bold">消費者A</text>
+                        
+                        <rect x="500" y="130" width="150" height="60" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="575" y="165" text-anchor="middle" font-weight="bold">消費者B</text>
+                        
+                        <rect x="500" y="210" width="150" height="60" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="575" y="245" text-anchor="middle" font-weight="bold">消費者C</text>
+                        
+                        <!-- 接続線 -->
+                        <line x1="200" y1="80" x2="250" y2="125" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="215" y="90" text-anchor="middle" font-size="12">イベント発行</text>
+                        
+                        <line x1="450" y1="125" x2="500" y2="80" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="450" y1="125" x2="500" y2="160" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="450" y1="125" x2="500" y2="240" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="470" y="180" text-anchor="middle" font-size="12">イベント購読</text>
+                        
+                        <!-- マーカー定義 -->
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                                markerWidth="6" markerHeight="6" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#3a86ff"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <p>主要な特徴：</p>
+                    <ul>
+                        <li><strong>非同期通信：</strong> 生成者と消費者が直接通信せず、イベントを介して連携</li>
+                        <li><strong>疎結合：</strong> コンポーネント間の依存関係の最小化</li>
+                        <li><strong>スケーラビリティ：</strong> 個々のコンポーネントを独立してスケール可能</li>
+                        <li><strong>回復力：</strong> 一部の障害が全体に波及しにくい</li>
+                        <li><strong>拡張性：</strong> 新しい消費者の追加が容易</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>イベントの種類と設計</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>イベントタイプ</th>
+                                <th>説明</th>
+                                <th>適用例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>通知イベント</td>
+                                <td>「何かが起きた」ことだけを通知（詳細なし）</td>
+                                <td>Eメール送信の通知、ログ記録のトリガー</td>
+                            </tr>
+                            <tr>
+                                <td>状態変更イベント</td>
+                                <td>エンティティの状態変更を通知</td>
+                                <td>注文状態の変更、在庫レベルの更新</td>
+                            </tr>
+                            <tr>
+                                <td>イベントソーシング</td>
+                                <td>すべての変更をイベントとして記録</td>
+                                <td>監査証跡、時系列分析、状態の再構築</td>
+                            </tr>
+                            <tr>
+                                <td>CQRSイベント</td>
+                                <td>コマンドモデルからクエリモデルへの変更伝播</td>
+                                <td>読み取り最適化されたビューの更新</td>
+                            </tr>
+                            <tr>
+                                <td>ドメインイベント</td>
+                                <td>ビジネスプロセスの意味のある状態変化</td>
+                                <td>ユーザー登録完了、支払い受理、配送完了</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>イベント処理パターン</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>発行/購読（Pub/Sub）</h4>
+                            <p>イベント発行者が購読者にイベントをブロードキャスト</p>
+                            <ul>
+                                <li>1つのイベントを複数のサービスが処理</li>
+                                <li>SNS+Lambda、Pub/Sub+Cloud Functionsなど</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>キューベース処理</h4>
+                            <p>イベントを順番に処理するためのキュー</p>
+                            <ul>
+                                <li>確実なメッセージ配信と処理</li>
+                                <li>SQS+Lambda、Cloud Tasks+Cloud Functions</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>イベントストリーミング</h4>
+                            <p>連続的なイベントストリームの処理</p>
+                            <ul>
+                                <li>リアルタイムデータ分析、処理</li>
+                                <li>Kinesis+Lambda、Pub/Sub+Dataflow</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ステップ関数/ワークフロー</h4>
+                            <p>複数のステップからなるプロセスの調整</p>
+                            <ul>
+                                <li>複雑なビジネスプロセスの実装</li>
+                                <li>AWS Step Functions、Azure Logic Apps</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>イベント駆動アーキテクチャの実装例</h3>
+                    <p>eコマースシステムでのイベント駆動設計</p>
+                    <pre><code>// 注文作成イベント例
+{
+  "eventType": "OrderCreated",
+  "timestamp": "2025-03-04T15:30:00Z",
+  "version": "1.0",
+  "data": {
+    "orderId": "ORD-12345",
+    "userId": "USR-6789",
+    "items": [
+      { "productId": "PROD-101", "quantity": 2, "price": 29.99 },
+      { "productId": "PROD-205", "quantity": 1, "price": 49.99 }
+    ],
+    "totalAmount": 109.97,
+    "shippingAddress": {
+      "street": "123 Main St",
+      "city": "New York",
+      "zipCode": "10001"
+    }
+  }
+}</code></pre>
+                    <p>このイベントをトリガーとした処理例：</p>
+                    <ul>
+                        <li>在庫管理関数：在庫数の更新</li>
+                        <li>通知関数：顧客へ注文確認メール送信</li>
+                        <li>分析関数：売上データの更新</li>
+                        <li>配送関数：配送手配の開始</li>
+                        <li>ポイント関数：顧客ポイントの加算</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> イベント駆動設計では、デバッグが複雑になる可能性があります。イベントの連鎖が長くなると、全体の流れを把握しづらくなります。また、イベントスキーマの変更は慎重に行う必要があり、バージョニングや後方互換性の維持が重要です。冪等性（同じイベントが複数回処理されても結果が変わらない性質）の確保も考慮すべき点です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> イベント駆動アーキテクチャの設計支援、適切なイベントスキーマの提案、イベント処理パターンの選択アドバイス、イベント連携フローの可視化などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="cloud-services" class="subsection">
+                <h3>7.3 クラウドサービスの活用</h3>
+                <p>サーバーレスアプリケーション構築に活用できる様々なマネージドクラウドサービスについて解説します。</p>
+                
+                <div class="card">
+                    <h3>サーバーレスエコシステム</h3>
+                    <p>サーバーレスアプリケーションは、様々なマネージドサービスを組み合わせて構築されます。</p>
+                    <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 800px; margin: 1rem auto; display: block;">
+                        <!-- 中心に関数 -->
+                        <circle cx="400" cy="200" r="80" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="400" y="205" text-anchor="middle" font-weight="bold">サーバーレス関数</text>
+                        
+                        <!-- 周りのサービス -->
+                        <circle cx="200" cy="100" r="60" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="200" y="100" text-anchor="middle" font-size="12" font-weight="bold">認証サービス</text>
+                        <text x="200" y="115" text-anchor="middle" font-size="10">IAM, Cognito, Auth0</text>
+                        
+                        <circle cx="600" cy="100" r="60" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="600" y="100" text-anchor="middle" font-size="12" font-weight="bold">ストレージ</text>
+                        <text x="600" y="115" text-anchor="middle" font-size="10">S3, Blob Storage</text>
+                        
+                        <circle cx="150" cy="300" r="60" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="150" y="300" text-anchor="middle" font-size="12" font-weight="bold">データベース</text>
+                        <text x="150" y="315" text-anchor="middle" font-size="10">DynamoDB, Firestore</text>
+                        
+                        <circle cx="650" cy="300" r="60" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="650" y="300" text-anchor="middle" font-size="12" font-weight="bold">メッセージング</text>
+                        <text x="650" y="315" text-anchor="middle" font-size="10">SNS, SQS, EventGrid</text>
+                        
+                        <circle cx="400" cy="60" r="60" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="400" y="60" text-anchor="middle" font-size="12" font-weight="bold">API管理</text>
+                        <text x="400" y="75" text-anchor="middle" font-size="10">API Gateway</text>
+                        
+                        <circle cx="400" cy="340" r="60" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="400" y="340" text-anchor="middle" font-size="12" font-weight="bold">モニタリング</text>
+                        <text x="400" y="355" text-anchor="middle" font-size="10">CloudWatch, AppInsights</text>
+                        
+                        <!-- 接続線 -->
+                        <line x1="340" y1="157" x2="250" y2="130" stroke="#3a86ff" stroke-width="1"/>
+                        <line x1="460" y1="157" x2="550" y2="130" stroke="#3a86ff" stroke-width="1"/>
+                        <line x1="340" y1="243" x2="200" y2="270" stroke="#3a86ff" stroke-width="1"/>
+                        <line x1="460" y1="243" x2="600" y2="270" stroke="#3a86ff" stroke-width="1"/>
+                        <line x1="400" y1="120" x2="400" y2="100" stroke="#3a86ff" stroke-width="1"/>
+                        <line x1="400" y1="280" x2="400" y2="300" stroke="#3a86ff" stroke-width="1"/>
+                    </svg>
+                </div>
+                
+                <div class="card">
+                    <h3>サーバーレスデータストア</h3>
+                    <p>サーバーレスアプリケーションで利用可能な、管理不要なデータベースサービスです。</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>サービス</th>
+                                <th>タイプ</th>
+                                <th>特徴</th>
+                                <th>適用シナリオ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>DynamoDB</td>
+                                <td>NoSQL (Key-Value, Document)</td>
+                                <td>高スケーラビリティ、低レイテンシー</td>
+                                <td>高トラフィックWebアプリ、IoTデータ</td>
+                            </tr>
+                            <tr>
+                                <td>Firestore</td>
+                                <td>NoSQL (Document)</td>
+                                <td>リアルタイム更新、オフラインサポート</td>
+                                <td>モバイルアプリ、リアルタイム協調アプリ</td>
+                            </tr>
+                            <tr>
+                                <td>Aurora Serverless</td>
+                                <td>リレーショナル (MySQL/PostgreSQL)</td>
+                                <td>自動スケーリング、RDBMSの機能</td>
+                                <td>変動負荷のあるCRUDアプリ</td>
+                            </tr>
+                            <tr>
+                                <td>CosmosDB</td>
+                                <td>マルチモデル</td>
+                                <td>複数APIサポート、グローバル分散</td>
+                                <td>地理分散アプリ、多様なデータモデル</td>
+                            </tr>
+                            <tr>
+                                <td>FaunaDB</td>
+                                <td>トランザクショナルNoSQL</td>
+                                <td>グローバルトランザクション、GraphQL</td>
+                                <td>データ一貫性重視のアプリ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>サーバーレスインテグレーションパターン</h3>
+                    <p>様々なサービスを連携させるパターンとベストプラクティスです。</p>
+                    <ul>
+                        <li><strong>API Gateway + 関数：</strong> RESTful/GraphQL APIのサーバーレス実装</li>
+                        <li><strong>イベントソース + 関数：</strong> データ変更、スケジュール、メッセージなどをトリガーとした処理</li>
+                        <li><strong>関数チェーン：</strong> 関数の出力を別の関数の入力として連鎖的に処理</li>
+                        <li><strong>オーケストレーション：</strong> ステップ関数やワークフローサービスによる複雑な処理の調整</li>
+                        <li><strong>ファンアウト：</strong> 1つのイベントからの複数の並列処理</li>
+                        <li><strong>集約パターン：</strong> 複数のイベントや結果の集約処理</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>サーバーレスアーキテクチャ実装例: eコマースシステム</h3>
+                    <p>サーバーレスを活用したeコマースシステムの実装例です。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>認証/ユーザー管理</h4>
+                            <ul>
+                                <li>Cognito/Auth0: ユーザー認証・認可</li>
+                                <li>Lambda: カスタム認証フロー</li>
+                                <li>DynamoDB: ユーザープロファイル</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>商品カタログ</h4>
+                            <ul>
+                                <li>S3: 商品画像保存</li>
+                                <li>Algolia: 検索サービス</li>
+                                <li>CloudFront: 画像配信CDN</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>注文処理</h4>
+                            <ul>
+                                <li>API Gateway: 注文API</li>
+                                <li>Lambda: 注文処理ロジック</li>
+                                <li>SQS: 注文キュー</li>
+                                <li>Step Functions: 注文ワークフロー</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>在庫管理</h4>
+                            <ul>
+                                <li>DynamoDB: 在庫データ</li>
+                                <li>Lambda: 在庫更新ロジック</li>
+                                <li>SNS: 在庫アラート通知</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>コスト最適化の戦略</h3>
+                    <p>サーバーレスアプリケーションのコストを最適化するための戦略です。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>適切な割り当てリソース</h4>
+                            <p>関数のメモリサイズや実行時間の最適化</p>
+                        </li>
+                        <li>
+                            <h4>コールドスタートの管理</h4>
+                            <p>必要な場合のみウォームアップを実装し、不要な呼び出しを避ける</p>
+                        </li>
+                        <li>
+                            <h4>データ転送コストの削減</h4>
+                            <p>不必要なデータ転送を最小化し、適切なリージョン選択</p>
+                        </li>
+                        <li>
+                            <h4>キャッシュの活用</h4>
+                            <p>API Gateway, CloudFront, Redis等でのレスポンスキャッシュ</p>
+                        </li>
+                        <li>
+                            <h4>効率的なデータストアの選択</h4>
+                            <p>アクセスパターンに最適なデータベースサービスの選択</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> クラウドサービスへの依存度が高まると、特定のプロバイダーへのベンダーロックインリスクが高まります。また、多数のサービスを組み合わせると全体の把握が難しくなり、運用の複雑性が増す可能性があります。サービスごとの制限（タイムアウト、同時実行数、ペイロードサイズなど）を理解し、アプリケーション設計に反映することが重要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> 特定のユースケースに適したクラウドサービスの提案、サービス間の連携アーキテクチャの設計、クラウドサービス選択の比較分析、コスト最適化のアドバイスなどをサポートできます。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="devops" class="section">
+            <h2>8. CI/CDと自動化</h2>
+            <p>開発の効率化と品質向上を実現する継続的インテグレーション・継続的デプロイメントと自動化について解説します。</p>
+            
+            <div id="pipelines" class="subsection">
+                <h3>8.1 パイプライン設計</h3>
+                <p>効率的な開発からデプロイまでのプロセスを自動化するCI/CDパイプラインの設計と実装を解説します。</p>
+                
+                <div class="card">
+                    <h3>CI/CDの基本概念</h3>
+                    <p>継続的インテグレーション（CI）と継続的デリバリー/デプロイメント（CD）の基本概念です。</p>
+                    <ul>
+                        <li><strong>継続的インテグレーション（CI）：</strong> コードの変更を定期的に統合し、自動テストによって検証するプラクティス</li>
+                        <li><strong>継続的デリバリー（CD）：</strong> ソフトウェアを常にリリース可能な状態に保ち、デプロイの準備を自動化</li>
+                        <li><strong>継続的デプロイメント：</strong> コード変更が自動的に本番環境にデプロイされる完全自動化されたパイプライン</li>
+                    </ul>
+                    <svg viewBox="0 0 800 150" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 800px; margin: 1rem auto; display: block;">
+                        <!-- CI/CDの流れ -->
+                        <rect x="20" y="50" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="70" y="75" text-anchor="middle" font-size="14">コード変更</text>
+                        
+                        <rect x="170" y="50" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="220" y="75" text-anchor="middle" font-size="14">ビルド</text>
+                        
+                        <rect x="320" y="50" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="370" y="75" text-anchor="middle" font-size="14">テスト</text>
+                        
+                        <rect x="470" y="50" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="520" y="75" text-anchor="middle" font-size="14">成果物生成</text>
+                        
+                        <rect x="620" y="50" width="100" height="40" rx="5" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="670" y="75" text-anchor="middle" font-size="14">デプロイ</text>
+                        
+                        <!-- 接続線 -->
+                        <line x1="120" y1="70" x2="170" y2="70" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="270" y1="70" x2="320" y2="70" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="420" y1="70" x2="470" y2="70" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="570" y1="70" x2="620" y2="70" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <!-- CI/CD区分 -->
+                        <line x1="20" y1="110" x2="420" y2="110" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="220" y="130" text-anchor="middle" font-size="14">継続的インテグレーション（CI）</text>
+                        
+                        <line x1="420" y1="110" x2="720" y2="110" stroke="#3a86ff" stroke-width="2"/>
+                        <text x="570" y="130" text-anchor="middle" font-size="14">継続的デリバリー/デプロイメント（CD）</text>
+                        
+                        <!-- マーカー定義 -->
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                                markerWidth="6" markerHeight="6" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#3a86ff"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+                
+                <div class="card">
+                    <h3>CI/CDパイプラインの構成要素</h3>
+                    <div class="grid">
+                        <div>
+                            <h4>ソースコード管理</h4>
+                            <ul>
+                                <li>Git（GitHub, GitLab, Bitbucket）</li>
+                                <li>ブランチ戦略（Git Flow, GitHub Flow）</li>
+                                <li>PRレビュープロセス</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>ビルドツール</h4>
+                            <ul>
+                                <li>npm/yarn（JavaScript）</li>
+                                <li>Maven/Gradle（Java）</li>
+                                <li>Docker（コンテナ化）</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>テスト自動化</h4>
+                            <ul>
+                                <li>単体テスト</li>
+                                <li>統合テスト</li>
+                                <li>E2Eテスト</li>
+                                <li>コード品質チェック</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>デプロイツール</h4>
+                            <ul>
+                                <li>Kubernetes（k8s）</li>
+                                <li>AWS CloudFormation</li>
+                                <li>Terraform</li>
+                                <li>Ansible</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>主要なCI/CDツール</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ツール</th>
+                                <th>特徴</th>
+                                <th>ホスティング</th>
+                                <th>適用シナリオ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jenkins</td>
+                                <td>高い柔軟性、豊富なプラグイン</td>
+                                <td>セルフホスト</td>
+                                <td>カスタマイズが必要な環境、企業内システム</td>
+                            </tr>
+                            <tr>
+                                <td>GitHub Actions</td>
+                                <td>GitHubとの緊密な統合</td>
+                                <td>クラウド</td>
+                                <td>GitHubでホストされるプロジェクト</td>
+                            </tr>
+                            <tr>
+                                <td>GitLab CI/CD</td>
+                                <td>GitLabとの一体化</td>
+                                <td>両方</td>
+                                <td>GitLabでホストされるプロジェクト</td>
+                            </tr>
+                            <tr>
+                                <td>CircleCI</td>
+                                <td>シンプルな設定、高速ビルド</td>
+                                <td>クラウド</td>
+                                <td>小〜中規模のプロジェクト、高速化重視</td>
+                            </tr>
+                            <tr>
+                                <td>AWS CodePipeline</td>
+                                <td>AWSサービスとの統合</td>
+                                <td>クラウド</td>
+                                <td>AWS環境でのデプロイ</td>
+                            </tr>
+                            <tr>
+                                <td>Azure DevOps</td>
+                                <td>Microsoft製品との連携</td>
+                                <td>クラウド</td>
+                                <td>Microsoftスタック、Azure環境</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>効果的なCI/CD設計原則</h3>
+                    <ol class="steps">
+                        <li>
+                            <h4>自動化の最大化</h4>
+                            <p>手動プロセスを可能な限り自動化し、一貫性と再現性を確保</p>
+                        </li>
+                        <li>
+                            <h4>小さな変更の頻繁なデプロイ</h4>
+                            <p>大きな変更よりも小さな変更を頻繁に統合することでリスクを軽減</p>
+                        </li>
+                        <li>
+                            <h4>フィードバックの高速化</h4>
+                            <p>問題を早期に発見するための素早いフィードバックループの構築</p>
+                        </li>
+                        <li>
+                            <h4>環境の一貫性</h4>
+                            <p>開発、テスト、本番環境の一貫性を保ち、「手元では動くのに」問題を回避</p>
+                        </li>
+                        <li>
+                            <h4>インフラのコード化</h4>
+                            <p>インフラをコードとして定義し、バージョン管理とテストを可能に</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>GitHubActionsの実装例</h3>
+                    <p>ReactアプリケーションのCI/CDパイプライン設定例</p>
+                    <pre><code>name: React CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    
+    - name: Install Dependencies
+      run: npm ci
+    
+    - name: Lint
+      run: npm run lint
+    
+    - name: Run Tests
+      run: npm test
+    
+    - name: Build
+      run: npm run build
+    
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: build/
+        
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download Build Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: build
+    
+    - name: Deploy to AWS S3
+      uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        SOURCE_DIR: 'build'
+        
+    - name: Invalidate CloudFront Cache
+      run: |
+        aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'</code></pre>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 複雑すぎるCI/CDパイプラインは保守が難しくなります。段階的に構築し、実際の開発ワークフローに合わせて最適化することが重要です。また、シークレット情報（APIキー、パスワードなど）はリポジトリに直接保存せず、CI/CDプラットフォームのシークレット管理機能を利用しましょう。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> プロジェクトに適したCI/CDツールの提案、パイプライン設定ファイルの作成支援、ワークフロー最適化のアドバイス、特定のツールの設定方法の解説などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="testing-automation" class="subsection">
+                <h3>8.2 テスト自動化</h3>
+                <p>自動化されたテストによって品質を確保し、リグレッションを防止する方法を解説します。</p>
+                
+                <div class="card">
+                    <h3>テスト自動化ピラミッド</h3>
+                    <p>効率的なテスト戦略を構築するためのフレームワークです。</p>
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 400px; margin: 1rem auto; display: block;">
+                        <polygon points="200,50 50,250 350,250" fill="#e9ecef" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="50" y1="250" x2="350" y2="250" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="83.33" y1="200" x2="316.67" y2="200" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="116.67" y1="150" x2="283.33" y2="150" stroke="#6c757d" stroke-width="2"/>
+                        <line x1="150" y1="100" x2="250" y2="100" stroke="#6c757d" stroke-width="2"/>
+                        
+                        <text x="200" y="270" text-anchor="middle" font-size="14" font-weight="bold">単体テスト</text>
+                        <text x="200" y="220" text-anchor="middle" font-size="14" font-weight="bold">統合テスト</text>
+                        <text x="200" y="170" text-anchor="middle" font-size="14" font-weight="bold">API テスト</text>
+                        <text x="200" y="120" text-anchor="middle" font-size="14" font-weight="bold">UI テスト</text>
+                        <text x="200" y="70" text-anchor="middle" font-size="14" font-weight="bold">E2E テスト</text>
+                        
+                        <!-- 注釈 -->
+                        <text x="40" y="250" text-anchor="end" font-size="12">多数</text>
+                        <text x="40" y="50" text-anchor="end" font-size="12">少数</text>
+                        <text x="360" y="250" text-anchor="start" font-size="12">高速</text>
+                        <text x="360" y="50" text-anchor="start" font-size="12">低速</text>
+                    </svg>
+                    <p>各層の特徴：</p>
+                    <ul>
+                        <li><strong>単体テスト：</strong> 個々の関数やメソッドの正確性を検証（高速で多数実行）</li>
+                        <li><strong>統合テスト：</strong> コンポーネント間の連携を検証</li>
+                        <li><strong>APIテスト：</strong> APIエンドポイントの動作を検証</li>
+                        <li><strong>UIテスト：</strong> ユーザーインターフェースの機能と表示を検証</li>
+                        <li><strong>E2Eテスト：</strong> ユーザーシナリオを実際の環境で検証（低速で少数実行）</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>テスト自動化ツール</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>テスト種類</th>
+                                <th>一般的なツール</th>
+                                <th>特徴</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>単体テスト</td>
+                                <td>Jest, Mocha, JUnit</td>
+                                <td>高速な実行、モック/スタブのサポート</td>
+                            </tr>
+                            <tr>
+                                <td>統合テスト</td>
+                                <td>Supertest, TestContainers</td>
+                                <td>コンポーネント間の連携検証</td>
+                            </tr>
+                            <tr>
+                                <td>APIテスト</td>
+                                <td>Postman, REST Assured</td>
+                                <td>HTTP APIの検証、自動化スクリプト</td>
+                            </tr>
+                            <tr>
+                                <td>UIテスト</td>
+                                <td>React Testing Library, Enzyme</td>
+                                <td>UI要素の動作と表示検証</td>
+                            </tr>
+                            <tr>
+                                <td>E2Eテスト</td>
+                                <td>Cypress, Playwright, Selenium</td>
+                                <td>ブラウザ上での自動化テスト</td>
+                            </tr>
+                            <tr>
+                                <td>負荷テスト</td>
+                                <td>JMeter, k6, Artillery</td>
+                                <td>パフォーマンスとスケーラビリティ検証</td>
+                            </tr>
+                            <tr>
+                                <td>セキュリティテスト</td>
+                                <td>OWASP ZAP, SonarQube</td>
+                                <td>脆弱性スキャン、セキュリティ検証</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>テスト駆動開発(TDD)の実践</h3>
+                    <p>テストを先に書いてから実装を行うアプローチです。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>失敗するテストを書く（赤）</h4>
+                            <p>実装前に期待する動作を定義するテストを作成</p>
+                        </li>
+                        <li>
+                            <h4>テストが通るコードを書く（緑）</h4>
+                            <p>最小限のコードでテストをパスさせる</p>
+                        </li>
+                        <li>
+                            <h4>コードをリファクタリングする（リファクタ）</h4>
+                            <p>テストが通ることを維持しながらコードを改善</p>
+                        </li>
+                        <li>
+                            <h4>繰り返す</h4>
+                            <p>次の機能に対して同じサイクルを繰り返す</p>
+                        </li>
+                    </ol>
+                    <p>メリット：</p>
+                    <ul>
+                        <li>テストカバレッジの向上</li>
+                        <li>設計の改善（テスト可能な設計）</li>
+                        <li>品質向上と欠陥の早期発見</li>
+                        <li>要件の明確化と検証</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>効果的なテスト自動化戦略</h3>
+                    <ul>
+                        <li><strong>テスト範囲の優先順位付け：</strong> 重要な機能と高リスク領域から</li>
+                        <li><strong>テストピラミッドの適用：</strong> 適切な比率で各レベルのテストを実装</li>
+                        <li><strong>テストデータの管理：</strong> 一貫性のあるテストデータ戦略</li>
+                        <li><strong>環境の一貫性：</strong> すべての環境で同じように動作するテスト</li>
+                        <li><strong>メンテナンス性の考慮：</strong> 壊れにくく保守しやすいテスト</li>
+                        <li><strong>継続的改善：</strong> テスト自動化プロセスの定期的な見直しと改善</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Jestを使った単体テスト例</h3>
+                    <pre><code>// utils.js
+export function calculateDiscount(price, discountPercent) {
+  if (price <= 0 || discountPercent < 0 || discountPercent > 100) {
+    throw new Error('Invalid input');
+  }
+  
+  const discountAmount = (price * discountPercent) / 100;
+  return parseFloat((price - discountAmount).toFixed(2));
+}
+
+// utils.test.js
+import { calculateDiscount } from './utils';
+
+describe('calculateDiscount', () => {
+  test('applies discount correctly', () => {
+    expect(calculateDiscount(100, 20)).toBe(80);
+    expect(calculateDiscount(75.5, 10)).toBe(67.95);
+  });
+  
+  test('handles zero discount', () => {
+    expect(calculateDiscount(100, 0)).toBe(100);
+  });
+  
+  test('throws error for invalid inputs', () => {
+    expect(() => calculateDiscount(-10, 20)).toThrow('Invalid input');
+    expect(() => calculateDiscount(100, -5)).toThrow('Invalid input');
+    expect(() => calculateDiscount(100, 110)).toThrow('Invalid input');
+  });
+});</code></pre>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> テスト自動化は価値のある投資ですが、すべてのテストを自動化することが常に最適とは限りません。自動化の投資対効果を考慮し、手動テストが適切な場合もあります。また、テストは実装と同様にメンテナンスが必要です。脆いテスト（些細な変更で壊れるテスト）を避け、堅牢なテストを書くことが重要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> テスト戦略の提案、テストケースのアイデア提供、テストコードの作成支援、特定の機能のテスト方法のアドバイス、既存テストの改善点の特定などをサポートできます。</p>
+                </div>
+            </div>
+            
+            <div id="monitoring" class="subsection">
+                <h3>8.3 監視とロギング</h3>
+                <p>本番環境でのアプリケーションの健全性を監視し、問題を迅速に特定・解決するための手法を解説します。</p>
+                
+                <div class="card">
+                    <h3>効果的な監視戦略</h3>
+                    <p>アプリケーションの可観測性を確保するための総合的なアプローチです。</p>
+                    <div class="grid">
+                        <div>
+                            <h4>ログ（Logs）</h4>
+                            <p>イベントの詳細記録</p>
+                            <ul>
+                                <li>構造化ログ形式（JSON等）</li>
+                                <li>コンテキスト情報の付加</li>
+                                <li>適切なログレベル</li>
+                                <li>一元管理と検索機能</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>メトリクス（Metrics）</h4>
+                            <p>システムの数値的測定</p>
+                            <ul>
+                                <li>リソース使用率（CPU、メモリ）</li>
+                                <li>応答時間、スループット</li>
+                                <li>エラー率、成功率</li>
+                                <li>ビジネスメトリクス</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>トレース（Traces）</h4>
+                            <p>リクエストの追跡と分析</p>
+                            <ul>
+                                <li>分散トレーシング</li>
+                                <li>サービス間の依存関係</li>
+                                <li>ボトルネックの特定</li>
+                                <li>パフォーマンス分析</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>アラート（Alerts）</h4>
+                            <p>異常の検知と通知</p>
+                            <ul>
+                                <li>閾値ベースのアラート</li>
+                                <li>異常検知（ML活用）</li>
+                                <li>アラート疲れの防止</li>
+                                <li>適切な通知チャネル</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>主要な監視・ロギングツール</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ツールカテゴリ</th>
+                                <th>代表的なツール</th>
+                                <th>特徴</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ログ管理</td>
+                                <td>ELK Stack, Graylog, Loki</td>
+                                <td>ログの収集、検索、可視化</td>
+                            </tr>
+                            <tr>
+                                <td>メトリクス監視</td>
+                                <td>Prometheus, Grafana, Datadog</td>
+                                <td>時系列データの収集と可視化</td>
+                            </tr>
+                            <tr>
+                                <td>分散トレーシング</td>
+                                <td>Jaeger, Zipkin, X-Ray</td>
+                                <td>マイクロサービス間の追跡</td>
+                            </tr>
+                            <tr>
+                                <td>APM (アプリケーションパフォーマンス監視)</td>
+                                <td>New Relic, Dynatrace, AppDynamics</td>
+                                <td>総合的なアプリケーション監視</td>
+                            </tr>
+                            <tr>
+                                <td>インフラ監視</td>
+                                <td>Nagios, Zabbix, Checkmk</td>
+                                <td>インフラストラクチャの健全性監視</td>
+                            </tr>
+                            <tr>
+                                <td>エラー追跡</td>
+                                <td>Sentry, Rollbar, Bugsnag</td>
+                                <td>例外の追跡と分析</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h3>効果的なロギング実践</h3>
+                    <p>アプリケーションの問題解決に役立つログを設計・実装する方法です。</p>
+                    <ul>
+                        <li><strong>構造化ロギング：</strong> 機械処理可能な形式（JSON等）でログを記録</li>
+                        <li><strong>コンテキスト情報：</strong> リクエストID、ユーザーID、セッションIDなどの関連情報を含める</li>
+                        <li><strong>適切なログレベル：</strong> ERROR, WARN, INFO, DEBUG, TRACEなどの適切な使い分け</li>
+                        <li><strong>機密情報の除外：</strong> パスワードやトークンなどの機密情報をログから除外</li>
+                        <li><strong>標準化：</strong> プロジェクト全体で一貫したロギング規則の適用</li>
+                        <li><strong>パフォーマンスへの配慮：</strong> ロギングによるオーバーヘッドの最小化</li>
+                    </ul>
+                    <pre><code>// 構造化ロギングの例（Node.js + Winston）
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
+
+// ログの使用例
+logger.info('User login successful', {
+  userId: 'user123',
+  requestId: 'req-abc-123',
+  ipAddress: '192.168.1.1',
+  timestamp: new Date().toISOString()
+});</code></pre>
+                </div>
+                
+                <div class="card">
+                    <h3>効果的なアラート設計</h3>
+                    <p>重要な問題を検出し、適切に通知するアラートシステムの設計です。</p>
+                    <ol class="steps">
+                        <li>
+                            <h4>アラート対象の特定</h4>
+                            <p>ビジネスに影響を与える重要な指標を特定</p>
+                        </li>
+                        <li>
+                            <h4>適切な閾値の設定</h4>
+                            <p>過去のデータと経験に基づく現実的な閾値の設定</p>
+                        </li>
+                        <li>
+                            <h4>優先度の定義</h4>
+                            <p>重大度に基づくアラートの分類（P0, P1, P2など）</p>
+                        </li>
+                        <li>
+                            <h4>通知チャネルの選択</h4>
+                            <p>優先度に応じたメール、SMS、チャット、電話などの使い分け</p>
+                        </li>
+                        <li>
+                            <h4>アラート疲れの防止</h4>
+                            <p>類似アラートの集約、ノイズ削減、自動クローズ</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>オブザーバビリティのベストプラクティス</h3>
+                    <p>アプリケーションの内部状態を外部から観察可能にするためのプラクティスです。</p>
+                    <ul>
+                        <li><strong>SLI/SLO/SLAの定義：</strong> サービスレベル指標、目標、合意事項の明確化</li>
+                        <li><strong>ゴールデンシグナルの監視：</strong> レイテンシー、トラフィック、エラー率、飽和度</li>
+                        <li><strong>カスタムメトリクスの実装：</strong> ビジネス固有の重要指標の計測</li>
+                        <li><strong>ヘルスチェックの実装：</strong> アプリケーションの健全性確認</li>
+                        <li><strong>ダッシュボードの構築：</strong> 重要指標の可視化と一覧表示</li>
+                        <li><strong>ポストモーテム文化：</strong> インシデント後の振り返りと改善</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <p><strong>注意点：</strong> 過剰な監視は管理オーバーヘッドとコストの増加を招きます。重要なシグナルに焦点を当て、ノイズを減らすことが重要です。また、ロギングが過剰だとパフォーマンスに影響を与えることがあります。適切なサンプリングと重要度の判断が必要です。プライバシーとコンプライアンスの観点から、個人情報や機密データのロギングには十分な注意が必要です。</p>
+                </div>
+                
+                <div class="note">
+                    <p><strong>Claude 3.7の活用：</strong> 監視戦略の策定支援、適切なロギング方法のアドバイス、アラート設計の提案、ダッシュボード設計のアイデア提供、特定の監視ツールの設定方法の解説などをサポートできます。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="best-practices" class="section">
+            <h2>9. ベストプラクティスとパターン</h2>
+            <p>フルスタック開発における一般的なベストプラクティスとデザインパターンを解説します。</p>
+            
+            <div class="card">
+                <h3>コード品質のベストプラクティス</h3>
+                <ul>
+                    <li><strong>DRY (Don't Repeat Yourself)：</strong> コードの重複を避け、再利用を促進</li>
+                    <li><strong>KISS (Keep It Simple, Stupid)：</strong> シンプルな解決策を優先し、複雑さを避ける</li>
+                    <li><strong>YAGNI (You Aren't Gonna Need It)：</strong> 必要になるまで機能を追加しない</li>
+                    <li><strong>SOLID原則：</strong> オブジェクト指向設計の5つの基本原則</li>
+                    <li><strong>クリーンコード：</strong> 読みやすく、メンテナンスしやすいコードを書く</li>
+                    <li><strong>一貫性のあるコーディング規約：</strong> プロジェクト全体で統一されたスタイルを使用</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>アーキテクチャパターン</h3>
+                <div class="grid">
+                    <div>
+                        <h4>MVC/MVVMパターン</h4>
+                        <p>関心の分離によるUIアプリケーション構築</p>
+                        <ul>
+                            <li>Model：データとビジネスロジック</li>
+                            <li>View：ユーザーインターフェース</li>
+                            <li>Controller/ViewModel：仲介役</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>リポジトリパターン</h4>
+                        <p>データアクセスロジックのカプセル化</p>
+                        <ul>
+                            <li>データソースの詳細を隠蔽</li>
+                            <li>一貫したデータアクセスAPI</li>
+                            <li>ビジネスロジックとの分離</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>ファサードパターン</h4>
+                        <p>複雑なサブシステムへのシンプルなインターフェース提供</p>
+                        <ul>
+                            <li>複雑さの隠蔽</li>
+                            <li>使用しやすい統合インターフェース</li>
+                            <li>依存関係の最小化</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>ストラテジーパターン</h4>
+                        <p>アルゴリズムの選択を実行時に変更可能に</p>
+                        <ul>
+                            <li>アルゴリズムのカプセル化</li>
+                            <li>実行時の切り替え</li>
+                            <li>拡張性の向上</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>フロントエンドのベストプラクティス</h3>
+                <ul>
+                    <li><strong>コンポーネントベース設計：</strong> 再利用可能で独立したUIコンポーネントの構築</li>
+                    <li><strong>状態管理の分離：</strong> ローカル状態とグローバル状態の適切な使い分け</li>
+                    <li><strong>レスポンシブデザイン：</strong> すべてのデバイスで最適な表示を確保</li>
+                    <li><strong>アクセシビリティ対応：</strong> WCAG準拠のインクルーシブなUI</li>
+                    <li><strong>遅延読み込み：</strong> 必要になったときにコンポーネントを読み込む</li>
+                    <li><strong>UI/UXの一貫性：</strong> デザインシステムの活用による統一感の確保</li>
+                    <li><strong>パフォーマンスの最適化：</strong> バンドルサイズの最小化、レンダリング最適化</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>バックエンドのベストプラクティス</h3>
+                <ul>
+                    <li><strong>RESTful API設計：</strong> 標準的で予測可能なAPIエンドポイント</li>
+                    <li><strong>レイヤード設計：</strong> 適切な関心の分離と責任の割り当て</li>
+                    <li><strong>トランザクション管理：</strong> データ整合性の確保と適切な境界設定</li>
+                    <li><strong>キャッシュ戦略：</strong> パフォーマンス向上のための適切なキャッシュ実装</li>
+                    <li><strong>非同期処理：</strong> 長時間実行タスクの非同期実行と監視</li>
+                    <li><strong>エラー処理：</strong> 一貫性のあるエラーレスポンスと適切なログ記録</li>
+                    <li><strong>レート制限：</strong> APIの過剰使用からの保護</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>データベースのベストプラクティス</h3>
+                <ul>
+                    <li><strong>適切なインデックス設計：</strong> クエリパフォーマンスの最適化</li>
+                    <li><strong>データのノーマライズ/デノーマライズ：</strong> ユースケースに応じた適切な選択</li>
+                    <li><strong>コネクションプーリング：</strong> データベース接続の効率的な再利用</li>
+                    <li><strong>データ検証：</strong> アプリケーションレベルでの入力データの検証</li>
+                    <li><strong>マイグレーション管理：</strong> バージョン管理されたスキーマ変更</li>
+                    <li><strong>クエリ最適化：</strong> 効率的なクエリ設計とモニタリング</li>
+                    <li><strong>バックアップ戦略：</strong> 定期的なバックアップと復旧テスト</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>セキュリティのベストプラクティス</h3>
+                <ul>
+                    <li><strong>入力検証：</strong> すべてのユーザー入力の検証と無害化</li>
+                    <li><strong>認証と認可：</strong> 強力な認証と適切な権限管理</li>
+                    <li><strong>HTTPS使用：</strong> すべての通信の暗号化</li>
+                    <li><strong>セキュリティヘッダー：</strong> CSP, HSTS等の適切な設定</li>
+                    <li><strong>機密情報の保護：</strong> パスワード等の安全な保存と処理</li>
+                    <li><strong>依存関係管理：</strong> 脆弱性のあるパッケージの定期的な更新</li>
+                    <li><strong>セキュリティテスト：</strong> 定期的な脆弱性スキャンとペネトレーションテスト</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>パフォーマンス最適化</h3>
+                <ul>
+                    <li><strong>キャッシュ戦略：</strong> ブラウザキャッシュ、CDN、アプリケーションキャッシュの活用</li>
+                    <li><strong>アセット最適化：</strong> 画像圧縮、コード分割、バンドル最小化</li>
+                    <li><strong>データベース最適化：</strong> クエリ効率化、インデックス、接続管理</li>
+                    <li><strong>レイジーローディング：</strong> 必要なときだけリソースを読み込む</li>
+                    <li><strong>計算コストの削減：</strong> アルゴリズムの効率化と不要な計算の排除</li>
+                    <li><strong>並列化：</strong> 可能な処理の並列実行</li>
+                    <li><strong>パフォーマンスモニタリング：</strong> 継続的な計測と改善</li>
+                </ul>
+            </div>
+            
+            <div class="warning">
+                <p><strong>注意点：</strong> ベストプラクティスは状況によって変わることがあります。プロジェクトの特性、チームのスキルセット、ビジネス要件に応じて適切なプラクティスを選択することが重要です。盲目的に追従するのではなく、理由を理解した上で適用しましょう。また、過度な抽象化やパターンの適用は、シンプルな解決策を複雑にすることがあるため注意が必要です。</p>
+            </div>
+            
+            <div class="note">
+                <p><strong>Claude 3.7の活用：</strong> コードレビューと品質向上の提案、特定の問題に適したデザインパターンの推奨、ベストプラクティスの適用アドバイス、パフォーマンス最適化のヒントなどをサポートできます。</p>
+            </div>
+        </section>
+        
+        <section id="learning-path" class="section">
+            <h2>10. 学習ロードマップ</h2>
+            <p>効率的にフルスタック開発スキルを身につけるための段階的な学習パスを提案します。</p>
+            
+            <div class="card">
+                <h3>フルスタック開発者への3段階アプローチ</h3>
+                <svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 800px; margin: 1rem auto; display: block;">
+                    <!-- 基礎段階 -->
+                    <rect x="50" y="50" width="200" height="150" rx="10" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                    <text x="150" y="30" text-anchor="middle" font-weight="bold" font-size="16">基礎段階</text>
+                    <text x="150" y="80" text-anchor="middle" font-size="14">HTML/CSS/JavaScript</text>
+                    <text x="150" y="110" text-anchor="middle" font-size="14">Git</text>
+                    <text x="150" y="140" text-anchor="middle" font-size="14">データ構造とアルゴリズム</text>
+                    <text x="150" y="170" text-anchor="middle" font-size="14">基本的なサーバーサイド言語</text>
+                    
+                    <!-- 中級段階 -->
+                    <rect x="300" y="50" width="200" height="150" rx="10" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                    <text x="400" y="30" text-anchor="middle" font-weight="bold" font-size="16">中級段階</text>
+                    <text x="400" y="80" text-anchor="middle" font-size="14">フロントエンドフレームワーク</text>
+                    <text x="400" y="110" text-anchor="middle" font-size="14">APIと認証</text>
+                    <text x="400" y="140" text-anchor="middle" font-size="14">データベース設計</text>
+                    <text x="400" y="170" text-anchor="middle" font-size="14">テスト自動化</text>
+                    
+                    <!-- 上級段階 -->
+                    <rect x="550" y="50" width="200" height="150" rx="10" fill="#f8f9fa" stroke="#3a86ff" stroke-width="2"/>
+                    <text x="650" y="30" text-anchor="middle" font-weight="bold" font-size="16">上級段階</text>
+                    <text x="650" y="80" text-anchor="middle" font-size="14">アーキテクチャ設計</text>
+                    <text x="650" y="110" text-anchor="middle" font-size="14">パフォーマンス最適化</text>
+                    <text x="650" y="140" text-anchor="middle" font-size="14">サーバーレス/クラウド</text>
+                    <text x="650" y="170" text-anchor="middle" font-size="14">CI/CDとDevOps</text>
+                    
+                    <!-- 接続線と矢印 -->
+                    <line x1="250" y1="125" x2="300" y2="125" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="500" y1="125" x2="550" y2="125" stroke="#3a86ff" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- 期間目安 -->
+                    <text x="150" y="220" text-anchor="middle" font-size="14">2〜3ヶ月</text>
+                    <text x="400" y="220" text-anchor="middle" font-size="14">3〜6ヶ月</text>
+                    <text x="650" y="220" text-anchor="middle" font-size="14">6〜12ヶ月</text>
+                    
+                    <!-- マーカー定義 -->
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                            markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3a86ff"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+            
+            <div class="card">
+                <h3>基礎段階：基本スキルの習得</h3>
+                <p>Web開発の基礎となるスキルを身につける段階です。</p>
+                <div class="grid">
+                    <div>
+                        <h4>HTML/CSS</h4>
+                        <ul>
+                            <li>セマンティックHTMLの理解</li>
+                            <li>レスポンシブデザインの基本</li>
+                            <li>CSSレイアウト（Flexbox, Grid）</li>
+                            <li>フォーム設計とバリデーション</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>JavaScript基礎</h4>
+                        <ul>
+                            <li>変数、データ型、制御構造</li>
+                            <li>関数とスコープ</li>
+                            <li>DOM操作</li>
+                            <li>非同期処理（Promise, async/await）</li>
+                            <li>ES6+の新機能</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>バージョン管理</h4>
+                        <ul>
+                            <li>Gitの基本コマンド</li>
+                            <li>ブランチの作成とマージ</li>
+                            <li>プルリクエストとコードレビュー</li>
+                            <li>コンフリクト解決</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>プログラミング基礎</h4>
+                        <ul>
+                            <li>データ構造（配列、リスト、ツリー）</li>
+                            <li>基本アルゴリズム</li>
+                            <li>計算量の概念（Big O表記）</li>
+                            <li>問題解決アプローチ</li>
+                        </ul>
+                    </div>
+                </div>
+                <p>推奨リソース：</p>
+                <ul>
+                    <li>MDN Web Docs (HTML, CSS, JavaScript)</li>
+                    <li>freeCodeCamp</li>
+                    <li>The Odin Project</li>
+                    <li>Codecademy</li>
+                    <li>JavaScript.info</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>中級段階：専門スキルの構築</h3>
+                <p>より高度な開発技術とフレームワークを学ぶ段階です。</p>
+                <div class="grid">
+                    <div>
+                        <h4>フロントエンドフレームワーク</h4>
+                        <ul>
+                            <li>React/Vue/Angularの基本</li>
+                            <li>コンポーネントベース開発</li>
+                            <li>状態管理（Redux, Vuex, Context API）</li>
+                            <li>ルーティング</li>
+                            <li>フォーム処理</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>バックエンド開発</h4>
+                        <ul>
+                            <li>Node.js / Express</li>
+                            <li>RESTful API設計</li>
+                            <li>認証と認可（JWT, OAuth）</li>
+                            <li>ミドルウェア</li>
+                            <li>エラーハンドリング</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>データベース</h4>
+                        <ul>
+                            <li>リレーショナルデータベース（MySQL, PostgreSQL）</li>
+                            <li>NoSQLデータベース（MongoDB）</li>
+                            <li>SQLの基本操作</li>
+                            <li>ORMの使用（Sequelize, TypeORM, Mongoose）</li>
+                            <li>データモデリング</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>テスト</h4>
+                        <ul>
+                            <li>単体テスト（Jest, Mocha）</li>
+                            <li>統合テスト</li>
+                            <li>E2Eテスト（Cypress, Playwright）</li>
+                            <li>TDD/BDDの概念</li>
+                            <li>モックとスタブ</li>
+                        </ul>
+                    </div>
+                </div>
+                <p>推奨リソース：</p>
+                <ul>
+                    <li>公式ドキュメント（React, Vue, Node.js）</li>
+                    <li>Udemy, Pluralsight, Frontend Masters</li>
+                    <li>フレームワーク固有のチュートリアル</li>
+                    <li>技術書とブログ記事</li>
+                    <li>GitHub上のオープンソースプロジェクト</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>上級段階：専門性の深化と視野の拡大</h3>
+                <p>高度なトピックとエンタープライズレベルの知識を習得する段階です。</p>
+                <div class="grid">
+                    <div>
+                        <h4>アーキテクチャ設計</h4>
+                        <ul>
+                            <li>デザインパターン</li>
+                            <li>マイクロサービス</li>
+                            <li>モノリスからの移行</li>
+                            <li>スケーラブルなシステム設計</li>
+                            <li>API設計のベストプラクティス</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>パフォーマンス最適化</h4>
+                        <ul>
+                            <li>フロントエンドパフォーマンス</li>
+                            <li>バックエンド最適化</li>
+                            <li>キャッシング戦略</li>
+                            <li>データベース最適化</li>
+                            <li>負荷テストと分析</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>クラウドとサーバーレス</h4>
+                        <ul>
+                            <li>クラウドプロバイダー（AWS, Azure, GCP）</li>
+                            <li>サーバーレス関数</li>
+                            <li>インフラのコード化（IaC）</li>
+                            <li>コンテナ化（Docker, Kubernetes）</li>
+                            <li>クラウドネイティブアプリケーション</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>DevOpsとCI/CD</h4>
+                        <ul>
+                            <li>継続的インテグレーション</li>
+                            <li>継続的デプロイメント</li>
+                            <li>監視とロギング</li>
+                            <li>インフラ自動化</li>
+                            <li>セキュリティの自動化</li>
+                        </ul>
+                    </div>
+                </div>
+                <p>推奨リソース：</p>
+                <ul>
+                    <li>上級技術書籍</li>
+                    <li>カンファレンスとウェビナー</li>
+                    <li>専門ワークショップ</li>
+                    <li>オープンソースコントリビューション</li>
+                    <li>エンジニアリングブログ（Netflix, Spotify, Airbnb等）</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>実践的プロジェクトアイデア</h3>
+                <p>段階的に難易度を上げながら実際にアプリケーションを作成することで、効果的にスキルを養うことができます。</p>
+                <ol class="steps">
+                    <li>
+                        <h4>基礎レベル：静的ウェブサイト</h4>
+                        <p>HTML/CSS/JavaScriptを使用した個人ポートフォリオサイトやランディングページ</p>
+                    </li>
+                    <li>
+                        <h4>初級レベル：インタラクティブアプリ</h4>
+                        <p>To-doリスト、メモアプリ、計算機などのシンプルなJavaScriptアプリケーション</p>
+                    </li>
+                    <li>
+                        <h4>中級レベル：フルスタックSPA</h4>
+                        <p>フロントエンドフレームワークとバックエンドAPIを使用したブログプラットフォームや商品カタログ</p>
+                    </li>
+                    <li>
+                        <h4>上級レベル：複雑なWebアプリケーション</h4>
+                        <p>リアルタイム機能、認証、決済統合を備えたeコマースサイトや社会的プラットフォーム</p>
+                    </li>
+                    <li>
+                        <h4>専門レベル：スケーラブルなシステム</h4>
+                        <p>マイクロサービス、CDN、負荷分散を活用した高可用性のエンタープライズアプリケーション</p>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <h3>効果的な学習のヒント</h3>
+                <ul>
+                    <li><strong>定期的に実践する：</strong> 学んだことをすぐに実践的なプロジェクトに応用する</li>
+                    <li><strong>公開リポジトリを作成：</strong> GitHub上でコードを公開し、フィードバックを得る</li>
+                    <li><strong>コミュニティに参加：</strong> フォーラム、Discordサーバー、ミートアップで学習体験を共有</li>
+                    <li><strong>学習の継続性を維持：</strong> 小さな目標を設定し、一貫して学習する習慣を作る</li>
+                    <li><strong>他人のコードを読む：</strong> オープンソースプロジェクトや優れた実装例を研究する</li>
+                    <li><strong>深さと広さのバランス：</strong> 専門性を深めながらも、関連技術に対する幅広い理解を持つ</li>
+                    <li><strong>教えることで学ぶ：</strong> ブログ記事の執筆や初心者への指導を通じて理解を深める</li>
+                </ul>
+            </div>
+            
+            <div class="warning">
+                <p><strong>注意点：</strong> 技術スタックが多様化しているため、すべてを学ぼうとするとオーバーロードになる可能性があります。特定の技術スタックに集中し、基本をしっかり理解してから拡張することをお勧めします。また、最新のトレンドに踊らされず、基本的な原則とパターンに重点を置くことが長期的には価値があります。</p>
+            </div>
+            
+            <div class="note">
+                <p><strong>Claude 3.7の活用：</strong> 個人の学習目標と現在のスキルレベルに基づいたカスタム学習計画の作成、特定の概念やトピックの詳細な解説、コードサンプルの提供、プロジェクトアイデアの提案、学習リソースの推奨などをサポートできます。</p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
