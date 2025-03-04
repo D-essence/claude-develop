@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINEとTinderの仕組み解説 - フルスタック開発者向けインフォグラフィック</title>
+    <style>
+        /* 基本スタイル */
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* ヘッダー */
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* メインコンテンツ */
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            color: #333;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+        
+        /* インフォグラフィックの共通スタイル */
+        .infographic-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .infographic-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23f0f0f0' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            z-index: 0;
+        }
+        
+        .infographic-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .app-overview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+        }
+        
+        .app-logo {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 2rem;
+        }
+        
+        .app-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        
+        .line-color {
+            color: #06C755;
+        }
+        
+        .tinder-color {
+            color: #FD3A73;
+        }
+        
+        /* アーキテクチャセクション */
+        .architecture-section {
+            margin: 3rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .arch-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        
+        .arch-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            border-radius: 1.5px;
+        }
+        
+        .architecture-diagram {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .diagram-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 2rem;
+            width: 100%;
+            margin: 2rem 0;
+        }
+        
+        .diagram-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .diagram-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #6a11cb;
+        }
+        
+        .diagram-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+        
+        .diagram-desc {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #ddd;
+            margin: 1rem 0;
+        }
+        
+        /* フローチャート */
+        .flowchart {
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .flow-step {
+            width: 100%;
+            max-width: 800px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .flow-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 2rem;
+            background-color: #ddd;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .step-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 機能セクション */
+        .features-section {
+            margin: 3rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #6a11cb;
+        }
+        
+        .feature-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+        
+        .feature-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* データベース設計 */
+        .database-section {
+            margin: 3rem 0;
+        }
+        
+        .db-structure {
+            margin: 2rem 0;
+        }
+        
+        .db-table {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .table-name {
+            font-weight: 700;
+            background-color: #f0f0f0;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .table-name svg {
+            margin-right: 0.8rem;
+        }
+        
+        .table-columns {
+            padding-left: 1rem;
+        }
+        
+        .column-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .column-name {
+            font-weight: 500;
+            width: 180px;
+        }
+        
+        .column-type {
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+        
+        .column-desc {
+            color: #666;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+        
+        /* API設計 */
+        .api-section {
+            margin: 3rem 0;
+        }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .api-table thead {
+            background-color: #f0f0f0;
+        }
+        
+        .api-table th,
+        .api-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .api-table th {
+            font-weight: 700;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            background-color: #6a11cb;
+        }
+        
+        .method.get {
+            background-color: #4CAF50;
+        }
+        
+        .method.post {
+            background-color: #2196F3;
+        }
+        
+        .method.put {
+            background-color: #FF9800;
+        }
+        
+        .method.delete {
+            background-color: #F44336;
+        }
+        
+        /* セキュリティセクション */
+        .security-section {
+            margin: 3rem 0;
+        }
+        
+        .security-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .security-point {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid #6a11cb;
+        }
+        
+        .security-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .security-title svg {
+            margin-right: 0.8rem;
+            color: #6a11cb;
+        }
+        
+        .security-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 比較セクション */
+        .comparison-section {
+            margin: 4rem 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .comparison-table thead {
+            background-color: #f0f0f0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .comparison-table th {
+            font-weight: 700;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .app-column {
+            width: 30%;
+        }
+        
+        .feature-column {
+            width: 40%;
+        }
+        
+        .line-badge {
+            background-color: #06C755;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        .tinder-badge {
+            background-color: #FD3A73;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        /* フッター */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .diagram-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .app-overview {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .app-logo {
+                margin-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .infographic-container {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* アイコンスタイル */
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
+            margin-right: 0.5rem;
+        }
+        
+        /* 注釈 */
+        .note {
+            background-color: #fef9c3;
+            border-left: 4px solid #fbbf24;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        
+        /* グラフィックレコーディングスタイル */
+        .sketch-line {
+            border: 2px solid #333;
+            border-radius: 10px;
+            position: relative;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #fff;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+        }
+        
+        .sketch-title {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: white;
+            padding: 0 10px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .hand-drawn {
+            font-family: 'M PLUS Rounded 1c', cursive;
+            color: #333;
+        }
+        
+        .highlight {
+            background-color: #FFF176;
+            padding: 0 5px;
+            border-radius: 3px;
+        }
+        
+        .connection-line {
+            position: relative;
+            min-height: 50px;
+            border-left: 2px dashed #6a11cb;
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+        
+        .connection-line::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #6a11cb;
+        }
+        
+        .connection-line::after {
+            content: "";
+            position: absolute;
+            left: -10px;
+            bottom: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #6a11cb;
+        }
+        
+        /* アニメーション */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>LINEとTinderの仕組み徹底解説</h1>
+            <p class="header-subtitle">フルスタック開発者のための完全ガイド</p>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="infographic-container animate-in">
+            <p class="infographic-text">
+                このインフォグラフィックサイトでは、メッセージングアプリ「LINE」とマッチングアプリ「Tinder」の仕組みをフルスタック開発の視点から解説します。アーキテクチャから主要機能、データベースモデルに至るまで、それぞれのアプリの特徴を比較しながら学んでいきましょう。
+            </p>
+            
+            <div class="note">
+                <strong>📝 このガイドについて:</strong> コードの具体的な実装ではなく、システム設計や内部構造の理解に重点を置いています。リアルワールドのアプリケーション設計のエッセンスを学ぶことができます。
+            </div>
+        </div>
+        
+        <!-- LINE セクション -->
+        <section id="line" class="animate-in delay-1">
+            <h2 class="section-title">LINE の仕組み</h2>
+            
+            <div class="infographic-container">
+                <div class="app-overview">
+                    <div class="app-logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+                            <rect width="100" height="100" rx="20" fill="#06C755"/>
+                            <path d="M82.5,50c0-15.2-15.2-27.5-33.9-27.5c-18.7,0-33.9,12.3-33.9,27.5c0,13.6,12.1,25,28.4,27.2c1.1,0.2,2.6,0.7,3,1.6c0.3,0.8,0.2,2.1,0.1,3c0,0-0.4,2.4-0.5,2.9c-0.1,0.8-0.6,3.3,2.9,1.8c3.5-1.5,18.8-11.1,25.7-19c4.7-5.2,7-10.5,7-16.5" fill="#FFFFFF"/>
+                            <path d="M44.4,38.7h-2.3c-0.4,0-0.6,0.3-0.6,0.6v14.3c0,0.4,0.3,0.6,0.6,0.6h2.3c0.4,0,0.6-0.3,0.6-0.6V39.4C45.1,39,44.8,38.7,44.4,38.7" fill="#06C755"/>
+                            <path d="M57.9,38.7h-2.3c-0.4,0-0.6,0.3-0.6,0.6v8.5l-6.4-8.7c0,0,0,0,0,0l0,0c0,0,0,0,0,0l0,0c0,0,0,0,0,0l0,0c0,0,0,0,0,0l0,0h-2.3c-0.4,0-0.6,0.3-0.6,0.6v14.3c0,0.4,0.3,0.6,0.6,0.6h2.3c0.4,0,0.6-0.3,0.6-0.6v-8.5l6.5,8.8c0,0.1,0.1,0.1,0.1,0.1c0,0,0,0,0.1,0.1c0,0,0.1,0,0.1,0c0,0,0,0,0.1,0h2.3c0.4,0,0.6-0.3,0.6-0.6V39.4C58.6,39,58.3,38.7,57.9,38.7" fill="#06C755"/>
+                            <path d="M37.8,50.3h-6.3v-10.9c0-0.4-0.3-0.6-0.6-0.6h-2.3c-0.4,0-0.6,0.3-0.6,0.6v14.3c0,0.3,0.2,0.5,0.4,0.6c0,0,0.1,0,0.1,0l0,0h9.3c0.4,0,0.6-0.3,0.6-0.6v-2.3C38.4,50.6,38.1,50.3,37.8,50.3" fill="#06C755"/>
+                            <path d="M72.1,43.1c0.4,0,0.6-0.3,0.6-0.6v-2.3c0-0.4-0.3-0.6-0.6-0.6h-9.3c-0.3,0-0.5,0.2-0.6,0.4c0,0,0,0.1,0,0.1l0,0v14.3c0,0,0,0.1,0,0.1c0,0.3,0.2,0.5,0.6,0.5h9.3c0.4,0,0.6-0.3,0.6-0.6v-2.3c0-0.4-0.3-0.6-0.6-0.6h-6.3v-2.4h6.3c0.4,0,0.6-0.3,0.6-0.6v-2.3c0-0.4-0.3-0.6-0.6-0.6h-6.3v-2.4H72.1z" fill="#06C755"/>
+                        </svg>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-title line-color">LINE（ライン）</h3>
+                        <p>LINEは、日本で最も人気のあるメッセージングアプリで、テキストメッセージ、音声・ビデオ通話、グループチャット、タイムラインなど様々な機能を提供しています。また、LINEペイ、LINEマンガなど多数の関連サービスを持つプラットフォームへと進化しています。</p>
+                        <p><strong>運営会社:</strong> LINE株式会社（現在はZ Holdings傘下）</p>
+                        <p><strong>月間アクティブユーザー:</strong> 日本国内で約9,000万人、グローバルで約2億人</p>
+                    </div>
+                </div>
+                
+                <div class="architecture-section">
+                    <h3 class="arch-title">LINE のアーキテクチャ</h3>
+                    
+                    <div class="architecture-diagram">
+                        <h4 class="hand-drawn">LINEのシステム構成</h4>
+                        
+                        <div class="diagram-grid">
+                            <div class="diagram-item">
+                                <div class="diagram-icon">📱</div>
+                                <h5 class="diagram-title">クライアント層</h5>
+                                <p class="diagram-desc">iOS/Android/WebアプリがRESTful APIを通じてバックエンドと通信</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">🔄</div>
+                                <h5 class="diagram-title">リアルタイム通信層</h5>
+                                <p class="diagram-desc">WebSocketを使用したリアルタイムメッセージング基盤</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">🔌</div>
+                                <h5 class="diagram-title">APIゲートウェイ</h5>
+                                <p class="diagram-desc">クライアントリクエストの認証、ルーティング、レート制限を管理</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">⚙️</div>
+                                <h5 class="diagram-title">マイクロサービス</h5>
+                                <p class="diagram-desc">チャット、グループ、通話、タイムラインなどの機能ごとのサービス</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">💾</div>
+                                <h5 class="diagram-title">データ層</h5>
+                                <p class="diagram-desc">RDBMSとNoSQLの併用。Redisでのキャッシュ、HBaseでの大量データ処理</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">☁️</div>
+                                <h5 class="diagram-title">クラウドインフラ</h5>
+                                <p class="diagram-desc">プライベートクラウドとパブリッククラウド(AWS/GCP)の併用</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sketch-line">
+                        <div class="sketch-title">メッセージング処理の流れ</div>
+                        <p class="hand-drawn">1. ユーザーがメッセージを送信</p>
+                        <p class="hand-drawn">2. WebSocketを通じてリアルタイム通信サーバーに到達</p>
+                        <p class="hand-drawn">3. メッセージサービスがメッセージを処理し保存</p>
+                        <p class="hand-drawn">4. プッシュ通知サービスが受信者にプッシュ通知</p>
+                        <p class="hand-drawn">5. 受信者のアプリがWebSocketを通じてメッセージを受信</p>
+                    </div>
+                </div>
+                
+                <div class="flowchart">
+                    <h3 class="arch-title">LINE の主要データフロー</h3>
+                    
+                    <div class="flow-container">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4 class="step-title">ユーザー認証フロー</h4>
+                                <p class="step-desc">LINEは電話番号とSMS認証コードを使用してユーザーを登録・認証します。認証後、一意のユーザーIDとアクセストークンが発行され、以降の通信はこれらを使って認証されます。セッション管理にはRedisが使用されています。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4 class="step-title">メッセージ送受信フロー</h4>
+                                <p class="step-desc">メッセージはWebSocketを使用してリアルタイムで送受信されます。サーバー側では受信したメッセージをキューに入れて順次処理し、MongoDB（メッセージ履歴用）に保存します。オフラインユーザーへのメッセージはキャッシュされ、オンラインになった時点で配信されます。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4 class="step-title">グループチャット処理</h4>
+                                <p class="step-desc">グループチャットでは、メッセージがグループ内の全メンバーに配信されるマルチキャスト方式が採用されています。グループメタデータはCassandraなどの分散データベースで管理され、大規模グループでの高速な配信を実現しています。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4 class="step-title">メディア共有処理</h4>
+                                <p class="step-desc">画像や動画などのメディアファイルは、専用のCDNサーバーにアップロードされ、URLリファレンスのみがメッセージとして送信されます。これにより、大容量メディアの効率的な共有が可能になり、ネットワーク負荷も軽減されています。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4 class="step-title">通知システム</h4>
+                                <p class="step-desc">プッシュ通知はFirebase Cloud Messaging（Android）とAPNs（iOS）を使用して配信されます。通知サービスは独立したマイクロサービスとして実装され、高いスケーラビリティを実現しています。通知の優先度付けや集約機能も備えています。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="features-section">
+                    <h3 class="arch-title">LINE の主要機能と実装特徴</h3>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">💬</div>
+                            <h4 class="feature-title">1対1チャット</h4>
+                            <p class="feature-desc">WebSocketベースのリアルタイム通信。既読ステータス管理はRedisで実装され、メッセージの配信確認も行います。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">👥</div>
+                            <h4 class="feature-title">グループチャット</h4>
+                            <p class="feature-desc">Pub/Subモデルで実装。グループ情報はCassandraで管理し、数千人規模のグループにも対応可能なアーキテクチャ。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">📞</div>
+                            <h4 class="feature-title">音声・ビデオ通話</h4>
+                            <p class="feature-desc">WebRTCを使用したP2P通信。NAT越えにはSTUNとTURNサーバーを使用。音声・ビデオ品質の自動調整機能も実装。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <h4 class="feature-title">タイムライン</h4>
+                            <p class="feature-desc">フィード生成はバッチ処理とリアルタイム処理の組み合わせ。投稿はHBaseとElasticsearchで検索可能に。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h4 class="feature-title">Letter Sealing（E2E暗号化）</h4>
+                            <p class="feature-desc">メッセージのエンドツーエンド暗号化。クライアント側で暗号化/復号化を行い、サーバーは暗号化されたデータのみ取り扱う。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">💰</div>
+                            <h4 class="feature-title">LINE Pay</h4>
+                            <p class="feature-desc">マイクロサービスアーキテクチャで実装。トランザクション管理にはSagaパターンを採用し、決済の整合性を確保。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="database-section">
+                    <h3 class="arch-title">LINE のデータベース設計</h3>
+                    
+                    <div class="db-structure">
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Users テーブル
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">user_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">プライマリキー、一意のユーザー識別子</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">phone_number</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">認証済み電話番号（一意制約あり）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">display_name</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">ユーザー表示名</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">status_message</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">ステータスメッセージ</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">profile_image_url</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">プロフィール画像のURL</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">アカウント作成日時</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Friendships テーブル
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">user_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">ユーザーID（複合主キーの一部）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">friend_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">友達のユーザーID（複合主キーの一部）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">block_status</div>
+                                    <div class="column-type">Boolean</div>
+                                    <div class="column-desc">ブロック状態</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">hidden</div>
+                                    <div class="column-type">Boolean</div>
+                                    <div class="column-desc">非表示設定</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">友達追加日時</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Messages コレクション (MongoDB)
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">_id</div>
+                                    <div class="column-type">ObjectId</div>
+                                    <div class="column-desc">メッセージID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">conversation_id</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">会話ID（1対1またはグループ）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">sender_id</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">送信者のユーザーID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">content</div>
+                                    <div class="column-type">Object</div>
+                                    <div class="column-desc">メッセージ内容（テキスト、URL、メディア参照など）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">content_type</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">メッセージタイプ（text, image, video, sticker等）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">送信日時</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">read_by</div>
+                                    <div class="column-type">Array</div>
+                                    <div class="column-desc">既読したユーザーIDの配列</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="api-section">
+                    <h3 class="arch-title">LINE の主要API設計</h3>
+                    
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>エンドポイント</th>
+                                <th>メソッド</th>
+                                <th>説明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/api/v1/auth/token</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>ユーザー認証してアクセストークンを取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v1/users/profile</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>ユーザープロフィール情報の取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v1/users/friends</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>友達リストの取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v1/messages/send</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>メッセージ送信API（WebSocket補完用）</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v1/messages/{conversationId}</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>特定の会話のメッセージ履歴取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v1/groups/create</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>新しいグループを作成</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v1/media/upload</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>メディアファイルのアップロード</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="security-section">
+                    <h3 class="arch-title">LINE のセキュリティ対策</h3>
+                    
+                    <div class="security-points">
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" />
+                                </svg>
+                                エンドツーエンド暗号化
+                            </h4>
+                            <p class="security-desc">Letter Sealingと呼ばれるE2E暗号化システムを使用。メッセージは送信者のデバイスで暗号化され、受信者のデバイスでのみ復号可能。</p>
+                        </div>
+                        
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M18,8H17V6A5,5 0 0,0 12,1A5,5 0 0,0 7,6V8H6A2,2 0 0,0 4,10V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V10A2,2 0 0,0 18,8M8.9,6C8.9,4.29 10.29,2.9 12,2.9C13.71,2.9 15.1,4.29 15.1,6V8H8.9V6Z" />
+                                </svg>
+                                多要素認証
+                            </h4>
+                            <p class="security-desc">電話番号とSMS認証に加え、パスコードやiOS/Android生体認証を活用。アカウント乗っ取り防止のため不審なログインを検出するAI機能も実装。</p>
+                        </div>
+                        
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,12H19C18.47,16.11 15.72,19.78 12,20.92V12H5V6.3L12,3.19V12Z" />
+                                </svg>
+                                プライバシー制御
+                            </h4>
+                            <p class="security-desc">ユーザーごとにプライバシー設定が可能。ブロック機能、非表示機能、タイムラインの公開範囲制限など細かい制御が実装されている。</p>
+                        </div>
+                        
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                </svg>
+                                トラフィック保護
+                            </h4>
+                            <p class="security-desc">全通信はTLS/SSLで暗号化。API通信には署名付きJWTトークンを使用し、リプレイ攻撃やMITM攻撃を防止する。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tinder セクション -->
+        <section id="tinder" class="animate-in delay-2">
+            <h2 class="section-title">Tinder の仕組み</h2>
+            
+            <div class="infographic-container">
+                <div class="app-overview">
+                    <div class="app-logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+                            <linearGradient id="tinderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FD297B" />
+                                <stop offset="100%" style="stop-color:#FF5864" />
+                            </linearGradient>
+                            <path d="M50,5C25.1,5,5,25.1,5,50s20.1,45,45,45s45-20.1,45-45S74.9,5,50,5z" fill="url(#tinderGradient)"/>
+                            <path d="M68.1,62.3c-0.7,0.9-2.3,1.9-3.6,2.3c-1.2,0.4-2.9,0.6-4.3,0.6c-2.1,0-3.9-0.4-5.8-1.2c-0.4-0.2-0.8-0.4-1.3-0.6
+                            c-1.6-0.8-3.1-1.6-4.3-2.8c-0.5-0.4-0.8-0.7-0.7-1.4c0.1-0.7,0.5-1.3,1.2-1.3c0.3,0,0.6,0.1,0.9,0.2c1.2,0.6,2.5,1.1,3.7,1.5
+                            c2.2,0.7,4.3,1,6.3,0.3c1.1-0.4,1.8-1.1,2-2.1c0.3-1.2-0.3-2.3-1.2-3c-0.9-0.7-2-1.2-3.1-1.6c-2.2-0.9-4.4-1.9-6.3-3.4
+                            c-1.8-1.4-3.2-3.1-3.7-5.4c-0.5-2.4-0.1-4.7,1.1-6.8c1.3-2.2,3.3-3.6,5.8-4.4c1.7-0.5,3.4-0.6,5.1-0.5c2.4,0.2,4.6,0.9,6.5,2.3
+                            c0.7,0.5,0.9,1.2,0.5,1.9c-0.4,0.7-1.1,0.8-1.8,0.4c-1.6-0.9-3.3-1.4-5.2-1.5c-1.3-0.1-2.7,0-3.9,0.5c-1.7,0.7-2.8,1.9-3.1,3.7
+                            c-0.2,1.8,0.4,3.1,1.8,4.1c1.1,0.8,2.3,1.4,3.6,1.9c2,0.8,4,1.6,5.8,2.8c1.5,1,2.8,2.2,3.5,3.9c0.7,1.7,0.8,3.5,0.2,5.2
+                            C69.5,60.3,69,61.4,68.1,62.3z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-title tinder-color">Tinder（ティンダー）</h3>
+                        <p>Tinderは世界最大のマッチングアプリで、左右のスワイプによる直感的なUIと位置情報ベースのマッチングシステムが特徴です。2012年の設立以来、世界中の出会いの方法を変革してきました。</p>
+                        <p><strong>運営会社:</strong> Match Group</p>
+                        <p><strong>月間アクティブユーザー:</strong> グローバルで約7,500万人</p>
+                    </div>
+                </div>
+                
+                <div class="architecture-section">
+                    <h3 class="arch-title">Tinder のアーキテクチャ</h3>
+                    
+                    <div class="architecture-diagram">
+                        <h4 class="hand-drawn">Tinderのシステム構成</h4>
+                        
+                        <div class="diagram-grid">
+                            <div class="diagram-item">
+                                <div class="diagram-icon">📱</div>
+                                <h5 class="diagram-title">クライアント層</h5>
+                                <p class="diagram-desc">iOS/Android/Webアプリが位置情報を活用したUI、スワイプジェスチャーを実装</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">🔌</div>
+                                <h5 class="diagram-title">API層</h5>
+                                <p class="diagram-desc">RESTful APIとGraphQLを組み合わせたハイブリッド構成</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">🧠</div>
+                                <h5 class="diagram-title">マッチングエンジン</h5>
+                                <p class="diagram-desc">位置情報、好み、行動分析に基づく推奨アルゴリズム</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">💬</div>
+                                <h5 class="diagram-title">メッセージング基盤</h5>
+                                <p class="diagram-desc">WebSocketベースのリアルタイムチャット、既読管理システム</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">💾</div>
+                                <h5 class="diagram-title">データ層</h5>
+                                <p class="diagram-desc">AWSのDynamoDB、RDS、ElasticSearchを組み合わせた分散データ管理</p>
+                            </div>
+                            
+                            <div class="diagram-item">
+                                <div class="diagram-icon">🔍</div>
+                                <h5 class="diagram-title">推薦システム</h5>
+                                <p class="diagram-desc">機械学習を活用したユーザー間の相性予測と推薦</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sketch-line">
+                        <div class="sketch-title">スワイプ処理の流れ</div>
+                        <p class="hand-drawn">1. ユーザーがプロフィールをスワイプ（右: Like、左: Pass）</p>
+                        <p class="hand-drawn">2. スワイプデータがAPIを通じてサーバーに送信</p>
+                        <p class="hand-drawn">3. 「Like」の場合、相手も自分に「Like」しているか確認</p>
+                        <p class="hand-drawn">4. 相互マッチの場合、マッチングイベントが発生</p>
+                        <p class="hand-drawn">5. 両ユーザーに通知が送信され、チャット機能が解放</p>
+                    </div>
+                </div>
+                
+                <div class="flowchart">
+                    <h3 class="arch-title">Tinder の主要データフロー</h3>
+                    
+                    <div class="flow-container">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4 class="step-title">ユーザー登録・認証フロー</h4>
+                                <p class="step-desc">Tinderは主にFacebook/Google連携または電話番号認証でユーザーを登録します。OAuthで外部認証後、ユーザーデータを取得してプロフィール構築のベースにします。認証後は、JWTトークンを使用した独自の認証システムに移行します。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4 class="step-title">プロフィール表示キューの生成</h4>
+                                <p class="step-desc">ユーザーに表示するプロフィールは、位置情報、年齢・性別などの検索条件、Elo Ratingに似たアルゴリズムで算出される「魅力スコア」、過去の行動パターンに基づいて選定されます。この候補はリアルタイム処理とバッチ処理の組み合わせで生成されます。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4 class="step-title">スワイプ処理とマッチング</h4>
+                                <p class="step-desc">スワイプ情報は即時処理されますが、マッチングの即時性を保ちつつサーバー負荷を分散するため、非同期キューシステムを採用しています。マッチングはRedisを利用した高速キャッシュと、永続化ストレージのハイブリッド構成で実現しています。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4 class="step-title">メッセージング処理</h4>
+                                <p class="step-desc">マッチング後のメッセージングはMongoDB+Redisの組み合わせで実装されています。新メッセージはRedisに一時保存後、非同期でMongoDBに永続化。既読状態や通知管理も同様のパターンで処理され、高速応答性と信頼性を両立しています。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4 class="step-title">ユーザー行動分析とフィードバック</h4>
+                                <p class="step-desc">ユーザーの全行動データはKafkaストリーム経由でデータレイクに集約され、バッチ分析とリアルタイム分析の両方が行われます。この分析結果は推薦アルゴリズムの改善やユーザーエクスペリエンスの最適化に使用されます。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="features-section">
+                    <h3 class="arch-title">Tinder の主要機能と実装特徴</h3>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">👆</div>
+                            <h4 class="feature-title">スワイプUI</h4>
+                            <p class="feature-desc">クライアント側でのジェスチャー処理とアニメーション。サーバー負荷軽減のためのクライアントサイドキャッシュと遅延送信機能実装。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🗺️</div>
+                            <h4 class="feature-title">位置情報マッチング</h4>
+                            <p class="feature-desc">GeoHashを使用した効率的な位置検索。ElasticSearchのGeo Queryで高速な近傍ユーザー検索を実現。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">💘</div>
+                            <h4 class="feature-title">マッチングアルゴリズム</h4>
+                            <p class="feature-desc">機械学習モデルによるユーザー間の相性予測。過去のマッチング結果、メッセージ頻度などを学習データとして活用。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h4 class="feature-title">Super Like</h4>
+                            <p class="feature-desc">優先マッチングのためのキュー管理システム。有料機能連携のためのマイクロサービスアーキテクチャ。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🔥</div>
+                            <h4 class="feature-title">Boost機能</h4>
+                            <p class="feature-desc">一時的な表示優先度上昇機能。Redis/TimeSeries構造でタイムウィンドウ管理、AWS Lambdaでブースト終了処理。</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🛫</div>
+                            <h4 class="feature-title">Passport機能</h4>
+                            <p class="feature-desc">位置情報のオーバーライド機能。実際の位置と仮想位置の管理、二重インデックスで効率的な検索を実現。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="database-section">
+                    <h3 class="arch-title">Tinder のデータベース設計</h3>
+                    
+                    <div class="db-structure">
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Users テーブル
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">user_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">プライマリキー、一意のユーザー識別子</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">auth_provider</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">認証プロバイダ（facebook, google, phone）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">auth_id</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">外部認証ID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">name</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">ユーザー名</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">birth_date</div>
+                                    <div class="column-type">Date</div>
+                                    <div class="column-desc">生年月日</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">gender</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">性別</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">looking_for</div>
+                                    <div class="column-type">Array</div>
+                                    <div class="column-desc">興味のある性別</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">bio</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">自己紹介文</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">アカウント作成日時</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                User_Photos テーブル
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">photo_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">プライマリキー</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">user_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">ユーザーID（外部キー）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">url</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">写真のURL</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">position</div>
+                                    <div class="column-type">Integer</div>
+                                    <div class="column-desc">表示順序</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">アップロード日時</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Swipes テーブル
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">swipe_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">プライマリキー</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">swiper_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">スワイプしたユーザーID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">swiped_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">スワイプされたユーザーID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">direction</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">スワイプ方向（right, left, super）</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">スワイプ日時</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Matches テーブル
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">match_id</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">プライマリキー</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">user_id_1</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">ユーザー1のID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">user_id_2</div>
+                                    <div class="column-type">UUID</div>
+                                    <div class="column-desc">ユーザー2のID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">マッチング日時</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">unmatched</div>
+                                    <div class="column-type">Boolean</div>
+                                    <div class="column-desc">マッチ解除フラグ</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">last_activity</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">最終アクティビティ日時</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-table">
+                            <div class="table-name">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                                </svg>
+                                Messages コレクション (MongoDB)
+                            </div>
+                            <div class="table-columns">
+                                <div class="column-item">
+                                    <div class="column-name">_id</div>
+                                    <div class="column-type">ObjectId</div>
+                                    <div class="column-desc">メッセージID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">match_id</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">マッチID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">sender_id</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">送信者のユーザーID</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">content</div>
+                                    <div class="column-type">String</div>
+                                    <div class="column-desc">メッセージ内容</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">created_at</div>
+                                    <div class="column-type">Timestamp</div>
+                                    <div class="column-desc">送信日時</div>
+                                </div>
+                                <div class="column-item">
+                                    <div class="column-name">read</div>
+                                    <div class="column-type">Boolean</div>
+                                    <div class="column-desc">既読状態</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="api-section">
+                    <h3 class="arch-title">Tinder の主要API設計</h3>
+                    
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>エンドポイント</th>
+                                <th>メソッド</th>
+                                <th>説明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/api/v2/auth/login</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>外部認証情報を使用してログイン</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/profile</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>自分のプロフィール情報取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/profile</td>
+                                <td><span class="method put">PUT</span></td>
+                                <td>プロフィール情報の更新</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/recs/core</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>マッチング候補のユーザー推薦取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/matches</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>マッチしたユーザー一覧取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/matches/{match_id}</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>特定のマッチング詳細取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/like/{user_id}</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>ユーザーにLikeを送信</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/pass/{user_id}</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>ユーザーをPassする</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/superlike/{user_id}</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>ユーザーにSuperLikeを送信</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/matches/{match_id}/messages</td>
+                                <td><span class="method get">GET</span></td>
+                                <td>マッチングのメッセージ履歴取得</td>
+                            </tr>
+                            <tr>
+                                <td>/api/v2/matches/{match_id}/messages</td>
+                                <td><span class="method post">POST</span></td>
+                                <td>マッチングにメッセージを送信</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="security-section">
+                    <h3 class="arch-title">Tinder のセキュリティ対策</h3>
+                    
+                    <div class="security-points">
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+<path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" />
+                                </svg>
+                                プライバシー保護
+                            </h4>
+                            <p class="security-desc">相互マッチするまで連絡先情報を非公開に保つ設計。位置情報は距離に変換し、正確な座標は保存されない仕組み。</p>
+                        </div>
+                        
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M18,8H17V6A5,5 0 0,0 12,1A5,5 0 0,0 7,6V8H6A2,2 0 0,0 4,10V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V10A2,2 0 0,0 18,8M8.9,6C8.9,4.29 10.29,2.9 12,2.9C13.71,2.9 15.1,4.29 15.1,6V8H8.9V6Z" />
+                                </svg>
+                                認証セキュリティ
+                            </h4>
+                            <p class="security-desc">OAuth2.0による外部サービス認証と多層防御。不正アクセス検知システムによる異常ログイン検出と自動ブロック機能。</p>
+                        </div>
+                        
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                </svg>
+                                コンテンツフィルタリング
+                            </h4>
+                            <p class="security-desc">AIベースの不適切画像検出システム。プロフィール写真の自動レビューとユーザー報告の迅速な処理を行い、安全な環境を維持。</p>
+                        </div>
+                        
+                        <div class="security-point">
+                            <h4 class="security-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                </svg>
+                                データ暗号化
+                            </h4>
+                            <p class="security-desc">すべての通信はTLS/SSL暗号化。データベースレベルでの暗号化も実装し、個人情報の保護を強化している。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 比較セクション -->
+        <section id="comparison" class="animate-in delay-3">
+            <h2 class="section-title">LINEとTinderのアーキテクチャ比較</h2>
+            
+            <div class="infographic-container">
+                <p class="infographic-text">
+                    LINEとTinderは異なる目的のアプリですが、大規模なユーザーベースとリアルタイム性を持つという共通点があります。ここでは両アプリの設計アプローチの違いを比較します。
+                </p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th class="feature-column">技術要素</th>
+                            <th class="app-column">LINE</th>
+                            <th class="app-column">Tinder</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>アーキテクチャパターン</td>
+                            <td>マイクロサービス + モノリス混在</td>
+                            <td>完全なマイクロサービス志向</td>
+                        </tr>
+                        <tr>
+                            <td>リアルタイム通信</td>
+                            <td>WebSocketをベースとした独自プロトコル</td>
+                            <td>WebSocket + GraphQL Subscriptions</td>
+                        </tr>
+                        <tr>
+                            <td>メインデータベース</td>
+                            <td>RDBMS + MongoDB + Cassandra + Redis</td>
+                            <td>DynamoDB + MongoDB + ElasticSearch + Redis</td>
+                        </tr>
+                        <tr>
+                            <td>インフラ</td>
+                            <td>ハイブリッドクラウド（プライベート + AWS/GCP）</td>
+                            <td>フルAWS活用</td>
+                        </tr>
+                        <tr>
+                            <td>メッセージング処理</td>
+                            <td>高い信頼性重視、オフライン配信保証</td>
+                            <td>マッチング後のみのシンプルな設計</td>
+                        </tr>
+                        <tr>
+                            <td>特徴的なアルゴリズム</td>
+                            <td>メッセージの最適配信経路選択</td>
+                            <td>ユーザーマッチング推薦システム</td>
+                        </tr>
+                        <tr>
+                            <td>キャッシュ戦略</td>
+                            <td>階層化キャッシュ、プッシュベース更新</td>
+                            <td>地理的分散キャッシュ、TTLベース</td>
+                        </tr>
+                        <tr>
+                            <td>スケーリング手法</td>
+                            <td>垂直/水平スケーリングの組み合わせ</td>
+                            <td>自動スケーリング、サーバーレス活用</td>
+                        </tr>
+                        <tr>
+                            <td>セキュリティの重点</td>
+                            <td>E2E暗号化、強力なプライバシー制御</td>
+                            <td>マッチング前のプライバシー保護、偽アカウント検出</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note">
+                    <strong>🔍 設計思想の違い:</strong> LINEは高い信頼性と多様な機能の統合に重点を置いているのに対し、Tinderはシンプルなコア機能（スワイプとマッチング）の最適化と拡張性に焦点を当てています。
+                </div>
+            </div>
+            
+            <div class="infographic-container">
+                <h3 class="arch-title">フルスタック開発者が学ぶべきポイント</h3>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏛️</div>
+                        <h4 class="feature-title">スケーラブルなアーキテクチャ</h4>
+                        <p class="feature-desc">両アプリともマイクロサービスとイベント駆動アーキテクチャを採用し、数億ユーザーの負荷に対応する設計手法を実現しています。</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4 class="feature-title">リアルタイム通信</h4>
+                        <p class="feature-desc">WebSocketとPub/Subモデルによる効率的なリアルタイム通信基盤がユーザー体験の鍵となっています。</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🧩</div>
+                        <h4 class="feature-title">適材適所のデータベース選択</h4>
+                        <p class="feature-desc">単一のDBに依存せず、データの特性に合わせてRDBMSとNoSQLを使い分ける設計思想が実装されています。</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h4 class="feature-title">キャッシュ戦略</h4>
+                        <p class="feature-desc">レスポンス速度とサーバー負荷削減のための多層キャッシュとキャッシュ無効化戦略が重要な役割を果たしています。</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h4 class="feature-title">アルゴリズム最適化</h4>
+                        <p class="feature-desc">マッチング推薦やメッセージ配信など、コア機能のアルゴリズム最適化がユーザー体験の質を決定づけています。</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h4 class="feature-title">セキュリティとプライバシー</h4>
+                        <p class="feature-desc">ユーザー情報保護のための多層防御と、機能に合わせた適切なセキュリティモデルの設計が重要です。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- まとめ -->
+        <section id="summary" class="animate-in delay-3">
+            <h2 class="section-title">まとめ</h2>
+            
+            <div class="infographic-container">
+                <p class="infographic-text">
+                    LINEとTinderは異なる目的を持つアプリですが、両者とも大規模なユーザーベースを支えるために洗練されたアーキテクチャを採用しています。フルスタック開発者として、これらの設計パターンを学ぶことで、スケーラブルで堅牢なアプリケーション開発のためのインスピレーションを得ることができます。
+                </p>
+                
+                <div class="sketch-line">
+                    <div class="sketch-title">開発者の視点で学ぶべきエッセンス</div>
+                    <p class="hand-drawn">1. <span class="highlight">目的に合った技術選定</span> - 機能要件に最適なテクノロジーを選ぶ柔軟性</p>
+                    <p class="hand-drawn">2. <span class="highlight">スケーラビリティを最初から考慮</span> - 後付けでなく設計段階からの対応</p>
+                    <p class="hand-drawn">3. <span class="highlight">ユーザー体験中心の思考</span> - 技術的制約よりもUXを優先する姿勢</p>
+                    <p class="hand-drawn">4. <span class="highlight">段階的な進化</span> - モノリスから始めてマイクロサービスへ進化させる現実的アプローチ</p>
+                    <p class="hand-drawn">5. <span class="highlight">データ駆動の意思決定</span> - ユーザー行動分析に基づく継続的な改善</p>
+                </div>
+                
+                <p class="infographic-text">
+                    この解説を通じて、実際のコードを書く前に、アプリケーションの全体像と内部構造を理解することの重要性を感じていただければ幸いです。フルスタック開発では、フロントエンドとバックエンドの両方を考慮しながら、システム全体の調和を意識することが成功への鍵となります。
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>LINEとTinderの仕組み解説 - フルスタック開発者向けインフォグラフィック</p>
+            <p class="footer-text">この資料は自己学習用に作成されました。実際の実装詳細とは異なる場合があります。</p>
+        </div>
+    </footer>
